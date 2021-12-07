@@ -50,7 +50,6 @@ class ConfirmEmailEvent extends Event
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $e) {
             // TODO Manage error Redirect to error page
-            echo $e;
         }
     }
 }
