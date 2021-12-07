@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Sign up form</title>
+    </head>
+    <body>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+
+            <button type="submit" class="btn btn-primary">Create an account</button>
+        {{ form_end(form) }}
+    </body>
+</html>

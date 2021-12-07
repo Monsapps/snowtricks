@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<a href="./">Home</a><br />
+<a href="./tricks">Tricks</a><br />
+<a href="./signup">Sign up</a><br />
+<a href="./signin">Sign in</a><br />
+<a href="./signout">Sign out</a><br />
+Coucou
+
+    {% for message in app.flashes("positive-response") %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}
