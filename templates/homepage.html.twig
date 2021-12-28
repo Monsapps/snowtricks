@@ -1,16 +1,63 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<a href="./">Home</a><br />
-<a href="./tricks">Tricks</a><br />
-<a href="./signup">Sign up</a><br />
-<a href="./signin">Sign in</a><br />
-<a href="./signout">Sign out</a><br />
-Coucou
-
-    {% for message in app.flashes("positive-response") %}
-        <div class="alert alert-success">
-            {{ message }}
+    <!-- Hero -->
+    <section class="container-fluid container-md vh-100">
+        <div class="hero">
+            <span>SnowTrick yeah!</span>
+            <img src="https://img.icons8.com/ios-glyphs/60/000000/page-down-button.png" onclick="window.location='#tricks'" />
         </div>
-    {% endfor %}
+    </section>
+
+    <section class="container">
+        <div class="row row-cols-1 row-cols-md-5 pt-2" id="tricks">
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <input type="button" value="Load More" id="load-trick">
+            </div>
+        </div>
+    </section>
+    <script>
+    // Store previous onload
+    var prevOnload = window.onload;
+    window.onload = function () {
+
+        if (prevOnload) {
+            prevOnload();
+        }
+
+        const url = `{{ path('get_tricks', {'limit': 'LIMIT', 'page': 'PAGE'}) }}`;
+        
+        const limit = 10; // load trics by 10
+        var page = 1; // page num 
+
+        // We need to replace LIMIT & PAGE with our js value
+        var newUrl = url.replace("LIMIT", limit).replace("PAGE", page);
+
+        var coundDisplayed = 0;
+        
+        var trickDiv = document.querySelector("#tricks");
+        fetch(newUrl, {
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+            console.log('trick count '+ json.count);
+            json.tricks.forEach(
+                trick => {
+                    let image = 'default.jpg';
+                    if(trick.imagePath !== "") {
+                        image = trick.imagePath;
+                    }
+                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}' } %}`;
+                }
+            );
+        })
+        .catch( e => console.log(e))
+    };
+    </script>
 {% endblock %}

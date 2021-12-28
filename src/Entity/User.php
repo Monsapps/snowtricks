@@ -4,6 +4,7 @@
  */
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -11,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * User entity store in database via Doctrine
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
  * @UniqueEntity(
@@ -31,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      type="integer",
      *      name="id_user")
      */
-    public $id;
+    public $idUser;
 
     /**
      * @ORM\Column(
@@ -90,6 +92,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public $passwordToken;
 
+    /**
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\Comment",
+     *      mappedBy="user")
+     */
+    public $comments;
+
+    /**
+     * @ORM\OneToOne(
+     *      targetEntity="App\Entity\Avatar",
+     *      mappedBy="user")
+     */
+    public $avatar;
+
+    /**
+     * Get name of user
+     * @return string
+     */
     public function getName(): ?string
     {
         return $this->name;
@@ -114,12 +134,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRegistrationDate(): ?int
+    public function getRegistrationDate(): ?DateTime
     {
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate(\DateTime $date): self
+    public function setRegistrationDate(DateTime $date): self
     {
         $this->registrationDate = $date;
 

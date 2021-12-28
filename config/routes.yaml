@@ -1,10 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-hello_world:
-    path: /hello-world
-    controller: App\Controller\HelloWorldController::helloWorld
-    methods: GET
 signout:
     path: /signout
     methods: GET

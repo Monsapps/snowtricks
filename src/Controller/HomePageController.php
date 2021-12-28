@@ -15,8 +15,9 @@ class HomePageController extends AbstractController
      * 
      * @Route("/", name="homepage")
      */
-    public function new()
+    public function homePage()
     {
+
         return $this->render("homepage.html.twig");
     }
 
