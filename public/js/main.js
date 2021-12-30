@@ -3,10 +3,10 @@
  */
 function deleteTrickListener() {
     var tricks = document.querySelectorAll("[data-delete-trick]");
-    for(trick of tricks) {
+    tricks.forEach(
+        (trick) => {
         trick.addEventListener("click", function(event) {
             event.preventDefault();
-            console.log(this.dataset.token);
             if(confirm("Are you sure you want to delete this trick?")) {
                 fetch(this.getAttribute("href"), {
                     method: "DELETE",
@@ -17,10 +17,10 @@ function deleteTrickListener() {
                 })
                 .then(response => response.json())
                 .then(data => console.log(data))
-                .catch(e => console.log(e))
+                .catch(e => console.log(e));
             }
         });
-    }
+    });
 }
 
 /**
@@ -53,14 +53,14 @@ function addNewTypeListener() {
                 "Content-Type": "application/x-www-form-urlencoded; charset:UTF-8;"
             }
         })
-        .then(response => response.text())
-        .then(html => {
+        .then((response) => response.text())
+        .then((html) => {
             let content = document.createElement("html");
             content.innerHTML = html;
             let trickTypeElement = content.querySelector(mainElement);
             document.querySelector(secondElement).replaceWith(trickTypeElement);
         })
-        .catch( e => console.log(e))
+        .catch((e) => console.log(e));
     });
 }
 
@@ -69,7 +69,7 @@ function addNewTypeListener() {
  */
 function updateImageListener() {
     var updateImages = document.querySelectorAll("[data-update-image]");
-    for(updateImage of updateImages) {
+    updateImages.forEach((updateImage) => {
         updateImage.addEventListener("click", function(e) {
             e.preventDefault();
             var myModal = new bootstrap.Modal(document.querySelector("#modal-window"));
@@ -103,16 +103,16 @@ function updateImageListener() {
                         method: form.getAttribute("method"),
                         body: data
                     })
-                    .then(response => response.text())
-                    .then(html => {
+                    .then((response) => response.text())
+                    .then((html) => {
                          modalContent.innerHTML = html;
                     })
-                    .catch( e => console.log(e))
+                    .catch((e) => console.log(e));
                 })
             })
-            .catch( e => console.log(e))
+            .catch((e) => console.log(e));
         });
-    }
+    });
 }
 
 /**
@@ -120,11 +120,10 @@ function updateImageListener() {
  */
 function deleteImageListener() {
     var deleteImages = document.querySelectorAll("[data-delete-image]");
-    for(deleteImage of deleteImages) {
+    deleteImages.forEach((deleteImage) => {
         deleteImage.addEventListener("click", function(event) {
             event.preventDefault();
             if(confirm("Are you sure you want to delete this image?")) {
-                console.log("Oui");
                 fetch(this.getAttribute("href"), {
                     method: "DELETE",
                     headers: {
@@ -132,12 +131,12 @@ function deleteImageListener() {
                     },
                     body: JSON.stringify({"__token": this.dataset.token})
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(e => console.log(e))
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((e) => console.log(e));
             }
         });
-    }
+    });
 }
 
 /**
@@ -146,23 +145,23 @@ function deleteImageListener() {
 function addMediaListener() {
     // Prototype from Symfony Doc
     const addTagFormDeleteLink = (tagFormLi) => {
-        const removeFormButton = document.createElement('button')
-        removeFormButton.classList
-        removeFormButton.innerText = 'Delete this media'
+        const removeFormButton = document.createElement("button");
+        removeFormButton.classList;
+        removeFormButton.innerText = "Delete this media";
 
         tagFormLi.append(removeFormButton);
 
-        removeFormButton.addEventListener('click', (e) => {
-            e.preventDefault()
+        removeFormButton.addEventListener("click", (e) => {
+            e.preventDefault();
             // remove the li for the tag form
             tagFormLi.remove();
         });
     }
 
     const addFormToCollection = (e) => {
-        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+        const collectionHolder = document.querySelector("." + e.currentTarget.dataset.collectionHolderClass);
 
-        const item = document.createElement('li');
+        const item = document.createElement("li");
 
         item.innerHTML = collectionHolder
             .dataset
@@ -179,8 +178,8 @@ function addMediaListener() {
     };
 
     document
-        .querySelectorAll('.add_item_link')
-        .forEach(btn => btn.addEventListener("click", addFormToCollection));
+        .querySelectorAll(".add_item_link")
+        .forEach((btn) => btn.addEventListener("click", addFormToCollection));
 }
 
 /**
@@ -188,7 +187,7 @@ function addMediaListener() {
  */
 function updateMediaListener() {
     var updateMedias = document.querySelectorAll("[data-update-media]");
-    for(updateMedia of updateMedias) {
+    updateMedias.forEach((updateMedia) => {
         updateMedia.addEventListener("click", function(event) {
             event.preventDefault();
             // Update modal title
@@ -199,8 +198,8 @@ function updateMediaListener() {
             fetch(this.getAttribute("href"), {
                 method: "GET"
             })
-            .then(response => response.text())
-            .then(content => {
+            .then((response) => response.text())
+            .then((content) => {
                 let modalContent = document.querySelector("#modal-body");
 
                 modalContent.innerHTML = content;
@@ -214,7 +213,7 @@ function updateMediaListener() {
                 preview.innerHTML = getTag;
 
                 urlMediaInput.addEventListener("change", function(e) {
-                    getTag = getEmbedTag(urlMediaInput.value);
+                    var getTag = getEmbedTag(urlMediaInput.value);
                     preview.innerHTML = getTag;
                 });
 
@@ -225,17 +224,17 @@ function updateMediaListener() {
                         method: form.getAttribute("method"),
                         body: data
                     })
-                    .then(response => response.text())
-                    .then(html => {
+                    .then((response) => response.text())
+                    .then((html) => {
                         modalContent.innerHTML = html;
                     })
-                    .catch( e => console.log(e))
+                    .catch((e) => console.log(e));
                 })
 
             })
-            .catch( e => console.log(e))
+            .catch((e) => console.log(e));
         });
-    }
+    });
 }
 
 /**
@@ -243,7 +242,7 @@ function updateMediaListener() {
  */
 function deleteMediaListener() {
     var deleteMedias = document.querySelectorAll("[data-delete-media]");
-    for(deleteMedia of deleteMedias) {
+    deleteMedias.forEach((deleteMedia) => {
         deleteMedia.addEventListener("click", function(event) {
             event.preventDefault();
             if(confirm("Are you sure you want to delete this media?")) {
@@ -254,10 +253,10 @@ function deleteMediaListener() {
                     },
                     body: JSON.stringify({"__token": this.dataset.token})
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(e => console.log(e))
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((e) => console.log(e));
             }
         });
-    }
+    });
 }

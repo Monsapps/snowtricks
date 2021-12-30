@@ -55,8 +55,8 @@
                 "Accept": "application/json"
             }
         })
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
             totalTricks = json.count;
             json.tricks.forEach(
                 trick => {
@@ -71,7 +71,7 @@
             );
             deleteTrickListener();
         })
-        .catch( e => console.log(e))
+        .catch((e) => console.log(e));
     }
 
     loadTricks();
