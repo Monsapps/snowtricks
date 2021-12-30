@@ -14,7 +14,7 @@
                             {% if is_granted("ROLE_CONFIRMED_USER") %}
                                 <div class="trick-details-edit">
                                     <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
-                                    <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
+                                    <a href="{{ path('delete_trick', {'slugTrick': trick.slugTrick}) }}" data-delete-trick data-token="{{ csrf_token('delete' ~ trick.idTrick )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
                                 </div>
                             {% endif %}
                         </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="row mb-2 px-3">
                     <div class="col">
-                        <div class="row flex-row flex-nowrap overflow-auto trick-more-medias" id="more-medias">
+                        <div class="row flex-row flex-nowrap overflow-auto" id="more-medias">
                             <script>
                                 const imgSrc = document.querySelector("#image-src");
                                 const moreMedia = document.querySelector("#more-medias");
@@ -33,11 +33,11 @@
                                         imgSrc.src = `{{ asset('/images/tricks/'~image.pathTrickImage) }}`;
                                     </script>
                                     <script>
-                                        moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
+                                        moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-more-medias"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
                                     </script>
                                 {% else %}
                                     <script>
-                                        moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
+                                        moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-more-medias"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
                                     </script>
                                 {% endif %}
                             {% else %}
@@ -73,4 +73,7 @@
             </div>
         </div>
     </div>
+    <script>
+        deleteTrickListener();
+    </script>
 {% endblock %}

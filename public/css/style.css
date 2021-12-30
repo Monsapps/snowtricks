@@ -20,22 +20,22 @@
 }
 
 .hero span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 3;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: xx-large;
-    font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: xx-large;
+  font-weight: bold;
 }
 
 .hero img {
-    position: absolute;
-    right: 2%;
-    bottom: 2%;
-    z-index: 3;
-    cursor: pointer;
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .title-box {
@@ -50,12 +50,10 @@
   padding-left: 5%;
   padding-right: 5%;
   position: absolute;
-  top: 20%;
-  -ms-transform: translateY(-20%);
-  transform: translateY(-20%);
+  top: 30%;
   left: 50%;
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
+  -ms-transform: translate(-50%, -30%);
+  transform: translate(-50%, -30%);
 }
 
 .trick-view {
@@ -69,19 +67,19 @@
 
 .trick-info {
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 40px;
   padding: 5px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, .7);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .trick-edit {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   margin-bottom: 5px;
   margin-right: 5px;
 }
@@ -108,21 +106,22 @@
   left: 50%;
   font-size: xx-large;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, .7);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .trick-details-edit {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   margin-top: 10px;
   margin-right: 10px;
-  background-color: rgba(255, 255, 255, .3);
+  background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid gainsboro;
 }
 
 .trick-more-medias img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
@@ -139,12 +138,12 @@
 
 .trick-edit-window {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #trick_descriptionTrick {

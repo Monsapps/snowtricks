@@ -20,140 +20,13 @@
 <script>
 window.onload = function () {
 
-    var updateImages = document.querySelectorAll("[data-update-image]");
-    for(updateImage of updateImages) {
-        updateImage.addEventListener("click", function(e) {
-            e.preventDefault();
-            var myModal = new bootstrap.Modal(document.querySelector("#modal-window"));
-            myModal.show();
+    updateImageListener();
 
-            fetch(this.getAttribute("href"), {
-                method: "GET"
-            })
-            .then(response => response.text())
-            .then(content => {
-                let modalContent = document.querySelector("#modal-body");
-                modalContent.innerHTML = content;
+    deleteImageListener();
 
-                /**
-                * Update image src with temp
-                **/
-                var imageInput = document.querySelector("#trick_image_image");
-                let image = document.querySelector("#img-preview");
-                imageInput.addEventListener("change", function() {
-                    let imagesValues = imageInput.files;
-                    for (var i = 0; i < imagesValues.length; i++) {
-                        image.src = window.URL.createObjectURL(imagesValues[i]);
-                    }
-                });
+    updateMediaListener();
 
-                let form = document.querySelector("form[name='trick_image']");
-                form.addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    let data = new FormData(form);
-                    fetch(form.getAttribute("action"), {
-                        method: form.getAttribute("method"),
-                        body: data
-                    })
-                    .then(response => response.text())
-                    .then(html => {
-                         modalContent.innerHTML = html;
-                    })
-                    .catch( e => console.log(e))
-                })
-            })
-            .catch( e => console.log(e))
-        });
-    }
-
-    var deleteImages = document.querySelectorAll("[data-delete-image]");
-    for(deleteImage of deleteImages) {
-        deleteImage.addEventListener("click", function(event) {
-            event.preventDefault();
-            if(confirm("Are you sur to delete this image?")) {
-                console.log("Oui");
-                fetch(this.getAttribute("href"), {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({"__token": this.dataset.token})
-                })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(e => console.log(e))
-            }
-        });
-    }
-
-    var updateMedias = document.querySelectorAll("[data-update-media]");
-    for(updateMedia of updateMedias) {
-        updateMedia.addEventListener("click", function(event) {
-            event.preventDefault();
-            // Update modal title
-            document.querySelector("#modalTitle").innerHTML = "Edit trick media";
-            var myModal = new bootstrap.Modal(document.querySelector("#modal-window"));
-            myModal.show();
-
-            fetch(this.getAttribute("href"), {
-                method: "GET"
-            })
-            .then(response => response.text())
-            .then(content => {
-                let modalContent = document.querySelector("#modal-body");
-
-                modalContent.innerHTML = content;
-
-                let form = document.querySelector("form[name='trick_media']");
-                let preview = document.querySelector("#media-preview");
-                let urlMediaInput = document.querySelector("#trick_media_urlTrickMedia");
-
-                // Add dynamically embed tag
-                var getTag = getEmbedTag(urlMediaInput.value);
-                preview.innerHTML = getTag;
-
-                urlMediaInput.addEventListener("change", function(e) {
-                    getTag = getEmbedTag(urlMediaInput.value);
-                    preview.innerHTML = getTag;
-                });
-
-                form.addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    let data = new FormData(form);
-                    fetch(form.getAttribute("action"), {
-                        method: form.getAttribute("method"),
-                        body: data
-                    })
-                    .then(response => response.text())
-                    .then(html => {
-                        modalContent.innerHTML = html;
-                    })
-                    .catch( e => console.log(e))
-                })
-
-            })
-            .catch( e => console.log(e))
-        });
-    }
-
-    var deleteMedias = document.querySelectorAll("[data-delete-media]");
-    for(deleteMedia of deleteMedias) {
-        deleteMedia.addEventListener("click", function(event) {
-            event.preventDefault();
-            if(confirm("Are you sur to delete this media?")) {
-                fetch(this.getAttribute("href"), {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({"__token": this.dataset.token})
-                })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(e => console.log(e))
-            }
-        });
-    }
+    deleteMediaListener();
 }
 </script>
     <div class="container">
@@ -165,9 +38,7 @@ window.onload = function () {
                             <img id="image-src" alt="{{ trick.nameTrick }}" />
                             <div class="trick-main-name">{{ trick.nameTrick }}</div>
                             {% if is_granted("ROLE_CONFIRMED_USER") %}
-                                <div class="trick-details-edit">
-                                    <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
-                                    <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
+                                <div class="trick-details-edit" id="trick-details-edit">
                                 </div>
                             {% endif %}
                         </div>
@@ -178,24 +49,18 @@ window.onload = function () {
                         <div class="row flex-row flex-nowrap overflow-auto trick-more-medias" id="more-medias">
                             <script>
                                 const imgSrc = document.querySelector("#image-src");
+                                const mainEdit = document.querySelector("#trick-details-edit");
                                 const moreMedia = document.querySelector("#more-medias");
                             </script>
                             {% for image in trick.images %}
                                 {% if loop.index == 1 %}
                                     <script>
+                                        // Set main trick image
                                         imgSrc.src = `{{ asset('/images/tricks/'~image.pathTrickImage) }}`;
-                                    </script>
-                                    <script>
-                                        moreMedia.innerHTML += `
-                                            <div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-edit-media">
-                                                <img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" />
-                                                <div class="trick-edit-window">
-                                                    <div class="trick-details-edit">
-                                                        <a href="{{ path('update_image', {id: image.idTrickImage}) }}" data-update-image data-token="{{ csrf_token('update' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
-                                                        <a href="{{ path('delete_image', {id: image.idTrickImage}) }}" data-delete-image data-token="{{ csrf_token('delete' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
-                                                    </div>
-                                                </div>
-                                            </div>`;
+                                        mainEdit.innerHTML = `
+                                            <a href="{{ path('update_image', {id: image.idTrickImage}) }}" data-update-image data-token="{{ csrf_token('update' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
+                                            <a href="{{ path('delete_image', {id: image.idTrickImage}) }}" data-delete-image data-token="{{ csrf_token('delete' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
+                                            `;
                                     </script>
                                 {% else %}
                                     <script>

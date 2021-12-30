@@ -12,7 +12,7 @@
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             <div class="trick-edit">
                 <a href="./tricks/update/{{ slug }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"/></a>
-                <a href="{{ path('update_trick', {'slugTrick': slug }) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png"/></a>
+                <a href="./tricks/delete/{{ slug }}" data-delete-trick data-token="{{ csrf_token('delete' ~ id )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png"/></a>
             </div>
         {% endif %}
     </div>

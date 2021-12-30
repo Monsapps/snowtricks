@@ -14,30 +14,42 @@
         </div>
         <div class="row">
             <div class="col text-center">
-                <input type="button" value="Load More" id="load-trick">
+                <input type="button" value="Load More" id="load-more">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <img src="https://img.icons8.com/ios-glyphs/60/000000/page-up-button.png" onclick="window.location='#top'" style="visibility:hidden;cursor:pointer;" id="top-button" />
             </div>
         </div>
     </section>
     <script>
-    // Store previous onload
-    var prevOnload = window.onload;
-    window.onload = function () {
 
-        if (prevOnload) {
-            prevOnload();
+    const url = `{{ path('get_tricks', {'limit': 'LIMIT', 'page': 'PAGE'}) }}`;
+    const limit = 5; // load trics by 5
+    var page = 1; // page num
+    var totalTricks = 0;
+    var trickDisplayed = 0;
+
+    const loadMore = document.querySelector("#load-more");
+    const topButton = document.querySelector("#top-button");
+
+    function showLoadMore() {
+        if(trickDisplayed >= totalTricks) {
+            loadMore.style.display = "none";
         }
 
-        const url = `{{ path('get_tricks', {'limit': 'LIMIT', 'page': 'PAGE'}) }}`;
-        
-        const limit = 10; // load trics by 10
-        var page = 1; // page num 
+        if(trickDisplayed > 5) {
+            topButton.style.visibility = "visible";
+        }
+    }
+
+    function loadTricks() {
+        var trickDiv = document.querySelector("#tricks");
 
         // We need to replace LIMIT & PAGE with our js value
         var newUrl = url.replace("LIMIT", limit).replace("PAGE", page);
 
-        var coundDisplayed = 0;
-        
-        var trickDiv = document.querySelector("#tricks");
         fetch(newUrl, {
             headers: {
                 "Accept": "application/json"
@@ -45,19 +57,28 @@
         })
         .then(response => response.json())
         .then(json => {
-            console.log(json);
-            console.log('trick count '+ json.count);
+            totalTricks = json.count;
             json.tricks.forEach(
                 trick => {
                     let image = 'default.jpg';
                     if(trick.imagePath !== "") {
                         image = trick.imagePath;
                     }
-                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}' } %}`;
+                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'id': '${trick.id}', 'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}' } %}`;
+                    trickDisplayed += 1;
+                    showLoadMore();
                 }
             );
+            deleteTrickListener();
         })
         .catch( e => console.log(e))
-    };
+    }
+
+    loadTricks();
+
+    loadMore.addEventListener("click", function(event) {
+        page += 1;
+        loadTricks();
+    });
     </script>
 {% endblock %}

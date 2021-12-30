@@ -14,6 +14,7 @@ use App\Type\TrickMediaType;
 use App\Type\TrickType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -181,7 +182,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/trick/delete/{idTrick}",
+     * @Route("/trick/delete/{slugTrick}",
      *      name="delete_trick",
      *      methods={"DELETE"})
      */
@@ -193,18 +194,16 @@ class TrickController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $data = json_decode($request->getContent(), true);
-        if($this->isCsrfTokenValid('delete'.$trick->getIdTrick(), $data['_token'])){
+        if($this->isCsrfTokenValid('delete'.$trick->getIdTrick(), $data['__token'])){
 
             $entityManager = $managerRegistry->getManager();
 
             $entityManager->remove($trick);
             $entityManager->flush();
-    
-            // On répond en json
             return new JsonResponse(['success' => 1]);
-        }else{
-            return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
+
+        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
 
     /**
@@ -222,15 +221,16 @@ class TrickController extends AbstractController
             return new JsonResponse(["error" => "Bad request"], 400);
         }
 
-        $offset = ($page > 0) ? ($page - 1) : 0 ;
+        $offset = ($page > 0) ? (($page - 1) * $limit) : 0 ;
         
-        $tricks = $managerRegistry->getRepository(Trick::class)
-            ->findBy(
-                array(),
-                array('creationDateTrick' => 'DESC'),
-                $limit,
-                $offset
-            );
+        $trickRepo = $managerRegistry->getRepository(Trick::class);
+
+        $tricks = $trickRepo->findBy(
+            array(),
+            array('creationDateTrick' => 'DESC'),
+            $limit,
+            $offset
+        );
     
         $tricksArray = [];
         foreach($tricks as $trick) {
@@ -239,13 +239,19 @@ class TrickController extends AbstractController
                 $image = $trick->getImages()[0]->getPathTrickImage();
             }
             $tricksArray[] = [
+                "id" => $trick->getIdTrick(),
                 "name" => $trick->getNameTrick(),
                 "slug" => $trick->getSlugTrick(),
                 "imagePath" => $image
             ];
         }
 
-        $count = count($tricks);
+        $allTricks = $trickRepo->findBy(
+            array(),
+            array()
+        );
+
+        $count = count($allTricks);
 
         return new JsonResponse([
             "count" => $count,
@@ -275,7 +281,8 @@ class TrickController extends AbstractController
 
             $imageName = $trickImage->getPathTrickImage();
             // Delete old image
-            unlink($this->getParameter("trick_image_path").'/'.$imageName);
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter("trick_image_path") . "/" . $imageName);
 
             $image = $form->get("image")->getData();
 
@@ -313,8 +320,10 @@ class TrickController extends AbstractController
         if($this->isCsrfTokenValid('delete'.$trickImage->getId(), $data['__token'])){
             // On récupère le nom de l'image
             $imagePath = $trickImage->getPathTrickImage();
+
             // On supprime le fichier
-            unlink($this->getParameter("trick_image_path") . "/" . $imagePath);
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter("trick_image_path") . "/" . $imagePath);
 
             // On supprime l'entrée de la base
             $entityManager = $managerRegistry->getManager();
@@ -323,15 +332,15 @@ class TrickController extends AbstractController
 
             // On répond en json
             return new JsonResponse(['success' => 1]);
-        }else{
-            return new JsonResponse(['error' => 'Invalid token'], 400);
         }
+
+        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
 
     /**
      * @Route("/update/media/{id}", name="update_media", methods={"POST", "GET"})
      */
-    public function updateMeda(
+    public function updateMedia(
         TrickMedia $trickMedia,
         Request $request,
         ManagerRegistry $managerRegistry)
@@ -380,9 +389,7 @@ class TrickController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse(['success' => 1]);
-        }else{
-            return new JsonResponse(['error' => 'Invalid token'], 400);
         }
+        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
-
 }

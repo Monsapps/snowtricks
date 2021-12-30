@@ -18,4 +18,9 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function countTricks()
+    {
+        $queryBuilder = $this->createQueryBuilder('trick');
+    }
+
 }
