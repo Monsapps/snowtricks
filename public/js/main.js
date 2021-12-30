@@ -15,9 +15,9 @@ function deleteTrickListener() {
                     },
                     body: JSON.stringify({"__token": this.dataset.token})
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(e => console.log(e));
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((e) => console.log(e));
             }
         });
     });
@@ -78,8 +78,8 @@ function updateImageListener() {
             fetch(this.getAttribute("href"), {
                 method: "GET"
             })
-            .then(response => response.text())
-            .then(content => {
+            .then((response) => response.text())
+            .then((content) => {
                 let modalContent = document.querySelector("#modal-body");
                 modalContent.innerHTML = content;
 
@@ -108,7 +108,7 @@ function updateImageListener() {
                          modalContent.innerHTML = html;
                     })
                     .catch((e) => console.log(e));
-                })
+                });
             })
             .catch((e) => console.log(e));
         });
@@ -156,7 +156,7 @@ function addMediaListener() {
             // remove the li for the tag form
             tagFormLi.remove();
         });
-    }
+    };
 
     const addFormToCollection = (e) => {
         const collectionHolder = document.querySelector("." + e.currentTarget.dataset.collectionHolderClass);
