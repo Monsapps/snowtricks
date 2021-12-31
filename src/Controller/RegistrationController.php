@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 use App\Entity\User;
 use App\Type\RegistrationType;
-use App\Events\ConfirmEmailEvent;
+use App\Event\ConfirmEmailEvent;
 
 class RegistrationController extends AbstractController
 {

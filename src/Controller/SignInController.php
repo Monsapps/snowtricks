@@ -82,14 +82,4 @@ class SignInController extends AbstractController
         ]);
     }
 
-    /**
-     * Create a sign in form
-     * @return SignInType
-     */
-    private function getSignInForm()
-    {
-        // return signin form
-        return $this->render("signin/signin.html.twig");
-    }
-
 }
