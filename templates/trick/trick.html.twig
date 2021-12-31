@@ -32,9 +32,6 @@
                                     <script>
                                         imgSrc.src = `{{ asset('/images/tricks/'~image.pathTrickImage) }}`;
                                     </script>
-                                    <script>
-                                        moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-more-medias"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
-                                    </script>
                                 {% else %}
                                     <script>
                                         moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-more-medias"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
@@ -67,7 +64,13 @@
                         {% if trick.modificationDateTrick %}
                             <span class="badge bg-info text-dark">Edited : {{ trick.modificationDateTrick|date("Y-m-d H:i") }}</span>
                         {% endif %}
-                        <hr size="8" width="90%" color="red">
+                        <hr style="width: 80%; margin: auto; height: 2px; margin-top: 1%;">
+                    </div>
+                </div>
+                <div class="row px-0">
+                    <div class="col mb-4" style="text-align: center;">
+                        Form
+                        <hr style="width: 80%; margin: auto; height: 2px; margin-top: 1%;">
                     </div>
                 </div>
             </div>

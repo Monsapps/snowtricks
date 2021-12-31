@@ -229,8 +229,7 @@ function updateMediaListener() {
                         modalContent.innerHTML = html;
                     })
                     .catch((e) => console.log(e));
-                })
-
+                });
             })
             .catch((e) => console.log(e));
         });
