@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Tricks{% endblock %}
+
+{% block body %}
+    <div class="container" id="main">
+        <div class="title-box">
+            Tricks
+        </div>
+        <div class="row row-cols-1 row-cols-md-5 pt-2">
+        {% for trick in tricks %}
+            {% set imagePath = 'default.jpg' %}
+            {% for image in trick.images|slice(0, 1) %}
+                {% set imagePath = image.pathTrickImage %}
+            {% endfor %}
+                    {% include 'trick/_trick_view.html.twig' with {'id': trick.idTrick, 'name': trick.nameTrick, 'slug': trick.slugTrick, 'image': imagePath } %}
+            {% else %}
+                No trick found
+            {% endfor %}
+        </div>
+
+        <a href="{{ path('add_trick') }}">Create new</a>
+    </div>
+
+    <script>
+    deleteTrickListener();
+    </script>
+{% endblock %}

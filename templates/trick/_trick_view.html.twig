@@ -1,0 +1,19 @@
+{% set imagePath = asset('/images/tricks/default.jpg') %}
+
+{% if image is not empty %}
+        {% set imagePath = asset('/images/tricks/'~ image) %}
+{% endif %}
+
+<div class="col">
+    <div class="mb-3 trick-view" style="background-image: url('{{ imagePath }}')" onclick="window.location.href='./tricks/details/{{ slug }}'">
+        <div class="trick-info">
+            {{ name }}
+        </div>
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            <div class="trick-edit">
+                <a href="./tricks/update/{{ slug }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"/></a>
+                <a href="./tricks/delete/{{ slug }}" data-delete-trick data-token="{{ csrf_token('delete' ~ id )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png"/></a>
+            </div>
+        {% endif %}
+    </div>
+</div>

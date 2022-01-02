@@ -1,8 +1,8 @@
-<html>
-    <head>
-        <title>Sign up form</title>
-    </head>
-    <body>
+{% extends "base.html.twig" %}
+
+{% block title %}SnowTricks - Registration{% endblock %}
+
+{% block body %}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             {{ form_row(form.name) }}
             {{ form_row(form.email) }}
@@ -10,5 +10,4 @@
 
             <button type="submit" class="btn btn-primary">Create an account</button>
         {{ form_end(form) }}
-    </body>
-</html>
+{% endblock %}

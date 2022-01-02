@@ -18,12 +18,16 @@ use App\Entity\User;
 use App\Type\RegistrationType;
 use App\Event\ConfirmEmailEvent;
 
+/**
+ * Provide sign up page
+ */
 class RegistrationController extends AbstractController
 {
     /**
      * Display sign up form page
      * 
-     * @Route("/signup", name="signup")
+     * @Route("/registration", name="signup")
+     * @return void
      */
     public function new(
         Request $request,
@@ -74,7 +78,7 @@ class RegistrationController extends AbstractController
             // Return to homepage with flash message
             $this->addFlash("positive-response", "Account created, however we have sent you an email to confirm it.");
 
-            return $this->redirect("./");
+            return $this->redirect("/");
             //dump($user);
         }
 

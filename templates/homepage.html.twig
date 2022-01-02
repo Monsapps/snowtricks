@@ -1,16 +1,84 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<a href="./">Home</a><br />
-<a href="./tricks">Tricks</a><br />
-<a href="./signup">Sign up</a><br />
-<a href="./signin">Sign in</a><br />
-<a href="./signout">Sign out</a><br />
-Coucou
-
-    {% for message in app.flashes("positive-response") %}
-        <div class="alert alert-success">
-            {{ message }}
+    <!-- Hero -->
+    <section class="container-fluid container-md vh-100">
+        <div class="hero">
+            <span>SnowTrick yeah!</span>
+            <img src="https://img.icons8.com/ios-glyphs/60/000000/page-down-button.png" onclick="window.location='#tricks'" />
         </div>
-    {% endfor %}
+    </section>
+
+    <section class="container">
+        <div class="row row-cols-1 row-cols-md-5 pt-2" id="tricks">
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <input type="button" value="Load More" id="load-more">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <img src="https://img.icons8.com/ios-glyphs/60/000000/page-up-button.png" onclick="window.location='#top'" style="visibility:hidden;cursor:pointer;" id="top-button" />
+            </div>
+        </div>
+    </section>
+    <script>
+
+    const url = `{{ path('get_tricks', {'limit': 'LIMIT', 'page': 'PAGE'}) }}`;
+    const limit = 5; // load trics by 5
+    var page = 1; // page num
+    var totalTricks = 0;
+    var trickDisplayed = 0;
+
+    const loadMore = document.querySelector("#load-more");
+    const topButton = document.querySelector("#top-button");
+
+    function showLoadMore() {
+        if(trickDisplayed >= totalTricks) {
+            loadMore.style.display = "none";
+        }
+
+        if(trickDisplayed > 5) {
+            topButton.style.visibility = "visible";
+        }
+    }
+
+    function loadTricks() {
+        var trickDiv = document.querySelector("#tricks");
+
+        // We need to replace LIMIT & PAGE with our js value
+        var newUrl = url.replace("LIMIT", limit).replace("PAGE", page);
+
+        fetch(newUrl, {
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            totalTricks = json.count;
+            json.tricks.forEach(
+                trick => {
+                    let image = 'default.jpg';
+                    if(trick.imagePath !== "") {
+                        image = trick.imagePath;
+                    }
+                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'id': '${trick.id}', 'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}' } %}`;
+                    trickDisplayed += 1;
+                    showLoadMore();
+                }
+            );
+            deleteTrickListener();
+        })
+        .catch((e) => console.log(e));
+    }
+
+    loadTricks();
+
+    loadMore.addEventListener("click", function() {
+        page += 1;
+        loadTricks();
+    });
+    </script>
 {% endblock %}

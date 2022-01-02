@@ -7,6 +7,9 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+/**
+ * Confirmation email event
+ */
 class ConfirmEmailEvent extends Event
 {
     const NAME = "confirm.email";
@@ -17,6 +20,11 @@ class ConfirmEmailEvent extends Event
     private $request;
     private $mailer;
 
+    /**
+     * Store required info
+     * 
+     * @return void
+     */
     public function __construct(
         string $email,
         string $name, 
@@ -31,6 +39,11 @@ class ConfirmEmailEvent extends Event
         $this->mailer = $mailer;
     }
 
+    /**
+     * Send the confirmation email via Mailer
+     * 
+     * @return void
+     */
     public function sendConfirmationEmail()
     {
         $baseUrl = $this->request->getSchemeAndHttpHost();

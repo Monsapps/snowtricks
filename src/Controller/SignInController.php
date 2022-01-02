@@ -1,11 +1,7 @@
 <?php
 /**
- * Sign in controller
- * 
  * Control authenticity of email and sign in
- * 
  */
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,12 +13,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 use App\Repository\UserRepository;
 
+/**
+ * Provide sign in controller page
+ */
 class SignInController extends AbstractController
 {
     /**
      * Display sign in page
      * 
-     * @Route("/signin", name="signin")
+     * @Route("/login", name="signin")
      */
     public function index(AuthenticationUtils $authenticationUtils)
     {
@@ -45,7 +44,7 @@ class SignInController extends AbstractController
      * 
      * @Route("/confirm/{token}", name="confirm_email")
      */
-    public function new(
+    public function confirmUserEmail(
         $token,
         UserRepository $userRepository,
         ManagerRegistry $managerRegistry,
