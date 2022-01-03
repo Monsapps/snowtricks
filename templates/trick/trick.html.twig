@@ -69,14 +69,82 @@
                 </div>
                 <div class="row px-0">
                     <div class="col mb-4" style="text-align: center;">
-                        Form
+                        {% if is_granted("ROLE_CONFIRMED_USER") %}
+                            {{ form(form) }}
+                        {% else %}
+                            You must be logged in to post a comment
+                        {% endif %}
                         <hr style="width: 80%; margin: auto; height: 2px; margin-top: 1%;">
+                    </div>
+                </div>
+                <div class="row px-0">
+                    <div class="col mb-4" id="trick-com">
+                    </div>
+                </div>
+                 <div class="row px-0">
+                    <div class="col mb-4" style="text-align: center;">
+                        <input type="button" value="Load More" id="load-comment">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
+    window.onload = function () {
+        var comUrl = `{{ path('get_comment', {'slugTrick': trick.slugTrick, 'limit': 10, 'page': 1}) }}`;
+        var totalComment = 0;
+        var comDisplayed = 0;
+
+        const loadComment = document.querySelector("#load-comment");
+
+        function showLoadComment() {
+
+            loadComment.style.display = "visible";
+
+            if(totalComment <= comDisplayed) {
+                loadComment.style.display = "none";
+            }
+            if(totalComment == 0) {
+                loadComment.style.display = "none";
+            }
+
+        }
+        
+        var commentDiv = document.querySelector("#trick-com");
+        
+        function loadComments() {
+            fetch(comUrl, {
+                headers: {
+                "Accept": "application/json"
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                totalComment = json.count;
+                json.comments.forEach((comment) => {
+                    commentDiv.innerHTML += `<div>${comment.comment} écrit par ${comment.username} <img src="${comment.avatarPath}" alt="${comment.username} avatar"></div>`;
+                    comDisplayed += 1;
+                    }
+                )
+                if(totalComment < 1) {
+                    commentDiv.innerHTML += `<div>No comment</div>`;
+                }
+
+                // Update the generated url for next request
+                comUrl = json.next;
+                showLoadComment()
+            })
+            .catch((e) => console.log(e));
+        }
+
+        loadComments();
+
         deleteTrickListener();
+
+        loadComment.addEventListener("click", function() {
+            loadComments();
+        });
+
+    }
     </script>
 {% endblock %}
