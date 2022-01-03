@@ -67,13 +67,4 @@ class CommentController extends AbstractController
         ]);
     }
 
-    /**
-     * Add comment function
-     */
-    public function addComment(
-        Comment $comment,
-        Request $request)
-    {
-        
-    }
 }
