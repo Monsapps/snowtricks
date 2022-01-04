@@ -9,6 +9,7 @@ use App\Type\AvatarType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -55,10 +56,20 @@ class AvatarController extends AbstractController
 
             $avatarName = md5(uniqid()) .".". $avatarFile->guessExtension();
 
-            $avatarFile->move(
-                $this->getParameter("avatar_image_path"),
-                $avatarName
-            );
+            try {
+                $avatarFile->move(
+                    $this->getParameter("avatar_image_path"),
+                    $avatarName
+                );
+            } catch(FileException $e) {
+
+                $this->addFlash("negative-response", "Error when moving file inside the server: ". $e);
+
+                return $this->renderForm("user/_user_avatar_form.html.twig", [
+                    "avatar" => $avatar,
+                    "form" => $form
+                ]);
+            }
 
             $avatar->setAvatarPath($avatarName);
             $entityManager = $managerRegistry->getManager();
