@@ -114,6 +114,8 @@ class TrickController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry)
     {
+        $user = $this->getUser();
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -127,7 +129,6 @@ class TrickController extends AbstractController
             $dateTime = new \DateTime();
             $comment->setDateComment($dateTime->setTimestamp(time()));
 
-            $user = $this->getUser();
             $comment->setUser($user);
 
             // Push the comment to the database
@@ -141,7 +142,8 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/trick.html.twig', [
             "trick" => $trick,
-            "form" => $form
+            "form" => $form,
+            "user" => $user
         ]);
     }
 

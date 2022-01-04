@@ -259,3 +259,54 @@ function deleteMediaListener() {
         });
     });
 }
+
+/**
+ * Update avatar listener
+ */
+function updateAvatarListener() {
+    var updateAvatar = document.querySelector("[data-update-avatar]");
+    updateAvatar.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        document.querySelector("#modalTitle").innerHTML = "Update avatar";
+        var myModal = new bootstrap.Modal(document.querySelector("#modal-window"));
+        myModal.show();
+
+        fetch(this.getAttribute("href"), {
+            method: "GET"
+        })
+        .then((response) => response.text())
+        .then((content) => {
+            let modalContent = document.querySelector("#modal-body");
+
+            modalContent.innerHTML = content;
+
+            avatarFormListener();
+        })
+        .catch((e) => console.log(e));
+    });
+}
+
+/**
+ * Avatar form listener
+ */
+function avatarFormListener() {
+    let modalContent = document.querySelector("#modal-body");
+
+    let form = document.querySelector("form[name='avatar']");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let data = new FormData(form);
+        fetch(form.getAttribute("action"), {
+            method: form.getAttribute("method"),
+            body: data
+        })
+        .then((response) => response.text())
+        .then((html) => {
+            modalContent.innerHTML = html;
+            avatarFormListener();
+        })
+        .catch((e) => console.log(e));
+    });
+}

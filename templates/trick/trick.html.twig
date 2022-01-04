@@ -3,6 +3,18 @@
 {% block title %}Snowtricks - {{ trick.nameTrick }} details{% endblock %}
 
 {% block body %}
+    <div class="modal fade" id="modal-window" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid container-md">
         <div class="row justify-content-center mx-0">
             <div class="col-12 col-md-10 px-0 trick-details">
@@ -72,8 +84,12 @@
                         {% if is_granted("ROLE_CONFIRMED_USER") %}
                             <div class="row justify-content-md-center mx-auto my-2">
                                 <div class="col-2 col-md-2 col-lg-1">
-                                    <img src="/images/avatars/default.png" alt="My avatar" class="comment-avatar"><br />
-                                    <a href="#edit-avatar">EDIT</a>
+                                    {% if user.avatar.avatarPath is not null %}
+                                        <img src="{{ asset('/images/avatars/'~user.avatar.avatarPath) }}" alt="My avatar" class="comment-avatar">
+                                    {% else %}
+                                        <img src="/images/avatars/default.png" alt="My avatar" class="comment-avatar">
+                                    {% endif %}
+                                    <a href="{{ path('update_avatar') }}" data-update-avatar>Update</a>
                                 </div>
                                 <div class="col-9 col-md-6">
                                     {{ form(form) }}
@@ -148,6 +164,8 @@
         loadComments();
 
         deleteTrickListener();
+
+        updateAvatarListener();
 
         loadComment.addEventListener("click", function() {
             loadComments();
