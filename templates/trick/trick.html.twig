@@ -3,7 +3,7 @@
 {% block title %}Snowtricks - {{ trick.nameTrick }} details{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container-fluid container-md">
         <div class="row justify-content-center mx-0">
             <div class="col-12 col-md-10 px-0 trick-details">
                 <div class="row mb-3 px-0">
@@ -69,14 +69,90 @@
                 </div>
                 <div class="row px-0">
                     <div class="col mb-4" style="text-align: center;">
-                        Form
+                        {% if is_granted("ROLE_CONFIRMED_USER") %}
+                            <div class="row justify-content-md-center mx-auto my-2">
+                                <div class="col-2 col-md-2 col-lg-1">
+                                    <img src="/images/avatars/default.png" alt="My avatar" class="comment-avatar"><br />
+                                    <a href="#edit-avatar">EDIT</a>
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    {{ form(form) }}
+                                </div>
+                            </div>
+                        {% else %}
+                            You must be logged in to post a comment
+                        {% endif %}
                         <hr style="width: 80%; margin: auto; height: 2px; margin-top: 1%;">
+                    </div>
+                </div>
+                <div class="row px-0">
+                    <div class="col mb-4" id="trick-com">
+                    </div>
+                </div>
+                 <div class="row px-0">
+                    <div class="col mb-4" style="text-align: center;">
+                        <input type="button" value="Load More" id="load-comment">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
+    window.onload = function () {
+        var comUrl = `{{ path('get_comment', {'slugTrick': trick.slugTrick, 'limit': 10, 'page': 1}) }}`;
+        var totalComment = 0;
+        var comDisplayed = 0;
+
+        const loadComment = document.querySelector("#load-comment");
+
+        function showLoadComment() {
+
+            loadComment.style.display = "visible";
+
+            if(totalComment <= comDisplayed) {
+                loadComment.style.display = "none";
+            }
+            if(totalComment == 0) {
+                loadComment.style.display = "none";
+            }
+
+        }
+        
+        var commentDiv = document.querySelector("#trick-com");
+        
+        function loadComments() {
+            fetch(comUrl, {
+                headers: {
+                "Accept": "application/json"
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                totalComment = json.count;
+                json.comments.forEach((comment) => {
+                    commentDiv.innerHTML += `{% include "trick/_trick_comment_view.html.twig" with {'avatarPath': '${comment.avatarPath}', 'username': '${comment.username}', 'comment': '${comment.comment}', 'writted': '${comment.date}' } %}`;
+                    comDisplayed += 1;
+                    }
+                )
+                if(totalComment < 1) {
+                    commentDiv.innerHTML += "<div>No comment</div>";
+                }
+
+                // Update the generated url for next request
+                comUrl = json.next;
+                showLoadComment()
+            })
+            .catch((e) => console.log(e));
+        }
+
+        loadComments();
+
         deleteTrickListener();
+
+        loadComment.addEventListener("click", function() {
+            loadComments();
+        });
+
+    }
     </script>
 {% endblock %}

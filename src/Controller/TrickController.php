@@ -4,17 +4,16 @@
  */
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Entity\TrickImage;
 use App\Entity\TrickMedia;
 use App\Entity\TrickType as EntityTrickType;
 use App\Repository\TrickRepository;
-use App\Type\TrickImageType;
-use App\Type\TrickMediaType;
+use App\Type\CommentType;
 use App\Type\TrickType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +41,7 @@ class TrickController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry)
     {
+        $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $trick = new Trick();
 
@@ -109,10 +109,39 @@ class TrickController extends AbstractController
      * Display unique trick
      * @Route("/tricks/details/{slugTrick}", name="tricks_details")
      */
-    public function trick(Trick $trick)
+    public function trick(
+        Trick $trick,
+        Request $request,
+        ManagerRegistry $managerRegistry)
     {
-        return $this->render('trick/trick.html.twig', [
-            'trick' => $trick,
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment->setTrick($trick);
+
+            // Add current timestamp
+            $dateTime = new \DateTime();
+            $comment->setDateComment($dateTime->setTimestamp(time()));
+
+            $user = $this->getUser();
+            $comment->setUser($user);
+
+            // Push the comment to the database
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash("positive-response", "Comment added successfully!");
+            return $this->redirectToRoute("tricks_details", ["slugTrick" => $trick->getSlugTrick()]);
+        }
+
+        return $this->renderForm('trick/trick.html.twig', [
+            "trick" => $trick,
+            "form" => $form
         ]);
     }
 
@@ -212,8 +241,8 @@ class TrickController extends AbstractController
      *      methods={"GET"})
      */
     public function getTrick(
-        $limit,
-        $page,
+        int $limit,
+        int $page,
         ManagerRegistry $managerRegistry)
     {
 
@@ -234,10 +263,12 @@ class TrickController extends AbstractController
     
         $tricksArray = [];
         foreach($tricks as $trick) {
+
             $image = "";
             if($trick->getImages()[0] != null) {
                 $image = $trick->getImages()[0]->getPathTrickImage();
             }
+            
             $tricksArray[] = [
                 "id" => $trick->getIdTrick(),
                 "name" => $trick->getNameTrick(),
