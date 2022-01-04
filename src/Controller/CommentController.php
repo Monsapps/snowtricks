@@ -45,9 +45,11 @@ class CommentController extends AbstractController
                 $avatarPath = $avatarBaseUrl . $avatar->getAvatarPath();
             }
 
+            $dateFormat = $comment->getDateComment()->format('Y/m/d H:i');
+
             $commentArray[] = [
                 "comment" => $comment->getContentComment(),
-                "date" => $comment->getDateComment(),
+                "date" => $dateFormat,
                 "username" => $user->getName(),
                 "avatarPath" => $avatarPath
             ];

@@ -41,6 +41,7 @@ class TrickController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry)
     {
+        $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $trick = new Trick();
 

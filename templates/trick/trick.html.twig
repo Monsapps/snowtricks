@@ -3,7 +3,7 @@
 {% block title %}Snowtricks - {{ trick.nameTrick }} details{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container-fluid container-md">
         <div class="row justify-content-center mx-0">
             <div class="col-12 col-md-10 px-0 trick-details">
                 <div class="row mb-3 px-0">
@@ -70,7 +70,15 @@
                 <div class="row px-0">
                     <div class="col mb-4" style="text-align: center;">
                         {% if is_granted("ROLE_CONFIRMED_USER") %}
-                            {{ form(form) }}
+                            <div class="row justify-content-md-center mx-auto my-2">
+                                <div class="col-2 col-md-2 col-lg-1">
+                                    <img src="/images/avatars/default.png" alt="My avatar" class="comment-avatar"><br />
+                                    <a href="#edit-avatar">EDIT</a>
+                                </div>
+                                <div class="col-9 col-md-6">
+                                    {{ form(form) }}
+                                </div>
+                            </div>
                         {% else %}
                             You must be logged in to post a comment
                         {% endif %}
@@ -122,12 +130,12 @@
             .then((json) => {
                 totalComment = json.count;
                 json.comments.forEach((comment) => {
-                    commentDiv.innerHTML += `<div>${comment.comment} écrit par ${comment.username} <img src="${comment.avatarPath}" alt="${comment.username} avatar"></div>`;
+                    commentDiv.innerHTML += `{% include "trick/_trick_comment_view.html.twig" with {'avatarPath': '${comment.avatarPath}', 'username': '${comment.username}', 'comment': '${comment.comment}', 'writted': '${comment.date}' } %}`;
                     comDisplayed += 1;
                     }
                 )
                 if(totalComment < 1) {
-                    commentDiv.innerHTML += `<div>No comment</div>`;
+                    commentDiv.innerHTML += "<div>No comment</div>";
                 }
 
                 // Update the generated url for next request

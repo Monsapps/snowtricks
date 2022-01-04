@@ -38,12 +38,10 @@ class TrickType extends AbstractType
         }
 
         $builderInterface
-            ->add("descriptionTrick", TextareaType::class, [
+        ->add("descriptionTrick", TextareaType::class, [
                 "help" => "Trick description"
             ])
-        ;
-
-        $builderInterface->add('images', FileType::class, [
+        ->add('images', FileType::class, [
             "label" => false,
             "multiple" => true,
             "mapped" => false,
@@ -59,9 +57,8 @@ class TrickType extends AbstractType
                     ])
                 ])
             ]
-        ]);
-
-        $builderInterface->add('medias', CollectionType::class, [
+        ])
+        ->add('medias', CollectionType::class, [
             "label" => false,
             "entry_type" => UrlType::class,
             "prototype" => true,
@@ -69,9 +66,8 @@ class TrickType extends AbstractType
             "allow_delete" => true,
             "mapped" => false,
             "required" => false
-        ]);
-
-        $builderInterface->add("trickType", EntityType::class, [
+        ])
+        ->add("trickType", EntityType::class, [
             "class" => EntityTrickType::class,
             "choice_label" => "nameTrickType",
             "placeholder" => "Select trick type"
