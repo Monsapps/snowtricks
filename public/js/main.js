@@ -261,6 +261,30 @@ function deleteMediaListener() {
 }
 
 /**
+ * Avatar form listener
+ */
+ function avatarFormListener() {
+    let modalContent = document.querySelector("#modal-body");
+
+    let form = document.querySelector("form[name='avatar']");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let data = new FormData(form);
+        fetch(form.getAttribute("action"), {
+            method: form.getAttribute("method"),
+            body: data
+        })
+        .then((response) => response.text())
+        .then((html) => {
+            modalContent.innerHTML = html;
+            avatarFormListener();
+        })
+        .catch((e) => console.log(e));
+    });
+}
+
+/**
  * Update avatar listener
  */
 function updateAvatarListener() {
@@ -281,30 +305,6 @@ function updateAvatarListener() {
 
             modalContent.innerHTML = content;
 
-            avatarFormListener();
-        })
-        .catch((e) => console.log(e));
-    });
-}
-
-/**
- * Avatar form listener
- */
-function avatarFormListener() {
-    let modalContent = document.querySelector("#modal-body");
-
-    let form = document.querySelector("form[name='avatar']");
-
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        let data = new FormData(form);
-        fetch(form.getAttribute("action"), {
-            method: form.getAttribute("method"),
-            body: data
-        })
-        .then((response) => response.text())
-        .then((html) => {
-            modalContent.innerHTML = html;
             avatarFormListener();
         })
         .catch((e) => console.log(e));
