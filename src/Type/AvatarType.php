@@ -1,10 +1,10 @@
 <?php
 /**
- * This is the form for trick image
+ * Avatar form 
  */
 namespace App\Type;
 
-use App\Entity\TrickImage;
+use App\Entity\Avatar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,18 +12,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class TrickImageType extends AbstractType
+class AvatarType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builderInterface, array $option)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $builderInterface
-        ->add("image", FileType::class, [
-            "label" => false,
+        $builder->add("image", FileType::class, [
             "mapped" => false,
+            "label" => false,
             "constraints" => [
                 new File([
-                    "maxSize" => "5024k",
+                    "maxSize" => "2048k",
                     "mimeTypes" => [
                         "image/*"
                     ],
@@ -31,14 +29,14 @@ class TrickImageType extends AbstractType
                 ])
             ]
         ])
-        ->add("save", SubmitType::class)
-        ;
-
+        ->add("submit", SubmitType::class, ["label" => "Update avatar"]);
+        
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => TrickImage::class
+            'data_class' => Avatar::class
         ]);
     }
 }

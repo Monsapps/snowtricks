@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            {% if avatar.pathAvatar is not empty %}
+                <img src="{{ asset('/images/avatars/'~avatar.pathAvatar) }}" id="img-preview" />
+            {% else %}
+                <img src="{{ asset('/images/avatars/default.png') }}" id="img-preview" />
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form(form) }}
+        </div>
+    </div>
+</div>
