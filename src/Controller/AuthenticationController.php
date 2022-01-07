@@ -167,9 +167,14 @@ class AuthenticationController extends AbstractController
     {
 
         $form = $this->createFormBuilder()
-            ->add("name", TextType::class)
+            ->add("name", TextType::class, [
+                "label" => "Username"
+            ])
             ->add("ask", SubmitType::class, [
-                "label" => "Ask for reset password"
+                "label" => "Ask for reset password",
+                "attr" => [
+                    "class" => "btn btn-primary"
+                ]
             ])
             ->getForm();
 
@@ -226,13 +231,17 @@ class AuthenticationController extends AbstractController
         $form = $this->createFormBuilder()
         ->add("username", TextType::class)
         ->add("password", PasswordType::class, [
-            "label" => "Password"
+            "label" => "Password",
+            "help" => "Type your new password"
         ])
         ->add("token", HiddenType::class, [
             "data" => $token
         ])
         ->add("reset", SubmitType::class, [
-            "label" => "Reset"
+            "label" => "Reset",
+            "attr" => [
+                "class" => "btn btn-primary"
+            ]
         ])
         ->getForm();
 
