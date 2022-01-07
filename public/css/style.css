@@ -187,7 +187,7 @@ input[type=password] {
 .form-container > .form-error > input[type=text],
 .form-container > .form-error > input[type=email],
 .form-container > .form-error > input[type=password]
- {
+{
   border-bottom: 1px solid red;
 }
 

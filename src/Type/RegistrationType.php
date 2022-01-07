@@ -19,14 +19,14 @@ class RegistrationType extends AbstractType
     {
         $builderInterface
             ->add("name", TextType::class, [
-                "help" => "Your username",
+                "help" => "This will be your username to connect",
                 "label" => "Username"
             ])
             ->add("email", EmailType::class, [
-                "help" => "Your email address"
+                "help" => "A confirmation message will be send to this address"
             ])
             ->add("password", PasswordType::class, [
-                "help" => "Your password"
+                "help" => "This will be your password to connect"
             ])
         ;
     }
