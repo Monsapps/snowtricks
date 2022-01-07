@@ -6,10 +6,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\ConfirmEmailEvent;
+use App\Event\ForgetEmailEvent;
 use App\Repository\UserRepository;
+use App\Service\TokenGenerator;
+use App\Type\RegistrationType;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -50,7 +57,8 @@ class AuthenticationController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         EventDispatcherInterface $eventDispatcher,
         MailerInterface $mailer,
-        ManagerRegistry $managerRegistry)
+        ManagerRegistry $managerRegistry,
+        TokenGenerator $token)
     {
         $user = new User();
         $registrationForm = $this->createForm(RegistrationType::class, $user);
@@ -73,7 +81,7 @@ class AuthenticationController extends AbstractController
             $user->setRegistrationDate($dateTime->setTimestamp(time()));
 
             // Add token for confirmation email
-            $confirmToken = bin2hex(openssl_random_pseudo_bytes(6));
+            $confirmToken = $token->getToken();
             $user->setRegistrationToken($confirmToken);
             
             // Doctrine and add user into database
@@ -142,6 +150,126 @@ class AuthenticationController extends AbstractController
         return $this->render("user/signin.html.twig", [
             'last_username' => $lastUsername,
             'error'         => $error,
+        ]);
+    }
+
+    /**
+     * @Route("/forgot_password", name="forgot_password")
+     */
+    public function forgotPassword(
+        Request $request,
+        UserRepository $userRepository,
+        EventDispatcherInterface $eventDispatcher,
+        ManagerRegistry $managerRegistry,
+        MailerInterface $mailer,
+        TokenGenerator $token
+    )
+    {
+
+        $form = $this->createFormBuilder()
+            ->add("name", TextType::class)
+            ->add("ask", SubmitType::class, [
+                "label" => "Ask for reset password"
+            ])
+            ->getForm();
+
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $userRepository->findOneBy(['name' => $form->get("name")->getData()]);
+
+            if($user) {
+                // Send email with password token and write token in db
+                $forgotToken = $token->getToken();
+
+                $user->setPasswordToken($forgotToken);
+
+                // Update user in db
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+
+                // Add event to send email
+                $event = new ForgetEmailEvent(
+                    $user->getEmail(),
+                    $user->getName(),
+                    $forgotToken,
+                    $request,
+                    $mailer
+                );
+                $eventDispatcher->dispatch($event, ForgetEmailEvent::NAME);
+
+                $this->addFlash("positive-response", "An email has been send to create a new password.");
+                return $this->redirect("/");
+            }
+
+            $this->addFlash("negative-response", "Unknow username");
+        }
+
+        return $this->renderForm("user/forgot_password.html.twig", [
+            "form" => $form
+        ]);
+    }
+
+    /**
+     * @Route("/reset_password/{token}", name="reset_password")
+     */
+    public function resetPassword(
+        $token,
+        Request $request,
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $passwordHasher,
+        ManagerRegistry $managerRegistry
+    )
+    {
+        $form = $this->createFormBuilder()
+        ->add("username", TextType::class)
+        ->add("password", PasswordType::class, [
+            "label" => "Password"
+        ])
+        ->add("token", HiddenType::class, [
+            "data" => $token
+        ])
+        ->add("reset", SubmitType::class, [
+            "label" => "Reset"
+        ])
+        ->getForm();
+
+    
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $userRepository->findOneBy([
+                "name" => $form->get("username")->getData(),
+                "passwordToken" => $form->get("token")->getData()
+            ]);
+            if($user) {
+
+                // hash new password and push it in db
+                $password = $form->get("password")->getData();
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $password
+                );
+                $user->setPassword($hashedPassword);
+
+                // Delete forget password token
+                $user->setPasswordToken(null);
+
+                // Update user in db
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+
+                $this->addFlash("positive-response", "Your new password has been set, ");
+                return $this->redirect("/");
+            }
+
+            $this->addFlash("negative-response", "Unknow user, you must ask a new forget password request");
+        }
+        return $this->renderForm("user/reset_password.html.twig", [
+            "form" => $form
         ]);
     }
 }

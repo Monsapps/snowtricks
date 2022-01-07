@@ -2,9 +2,8 @@
 
 namespace App\Subscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 use App\Event\ConfirmEmailEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConfirmMailSubscriber implements EventSubscriberInterface
 {
