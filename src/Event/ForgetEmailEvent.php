@@ -34,7 +34,7 @@ class ForgetEmailEvent extends Event
     )
     {
         $this->email = $email;
-        $this->name = $name;
+        $this->username = $name;
         $this->token = $token;
         $this->request = $request;
         $this->mailer = $mailer;
@@ -52,7 +52,7 @@ class ForgetEmailEvent extends Event
         ->to($this->email)
         ->subject("Snowtricks.com: Reset password request")
         ->html("
-            <p>Welcome {$this->name}</p>
+            <p>Welcome {$this->username}</p>
             <p>A password reset request has been requested, if you requested it continue reading this message. Otherwise delete this email</p>
             <p>Recreate your password by following this link: <a href=\"{$baseUrl}/reset_password/{$this->token}\">here</a></p>
             <p>Thanks!</p>");
