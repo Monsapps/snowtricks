@@ -171,3 +171,27 @@
   border: solid 1px black;
   word-wrap: break-word;
 }
+
+/**
+ * Form style
+ **/
+input[type=text],
+input[type=email],
+input[type=password] {
+  width: 80%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.form-container > .form-error > input[type=text],
+.form-container > .form-error > input[type=email],
+.form-container > .form-error > input[type=password]
+ {
+  border-bottom: 1px solid red;
+}
+
+.form-container > div > ul > li {
+  color: red;
+  list-style-type: none;
+}

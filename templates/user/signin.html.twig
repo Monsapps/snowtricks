@@ -8,11 +8,14 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <div class="container vh-100" style="position: relative;">
-        <div class="title-box">
+    <div class="container-fluid container-md position-relative vh-100">
+        <div class="d-none d-md-block title-box">
             Login
         </div>
-        <div class="middle-box">
+        <div class="position-absolute middle-box">
+            <div class="d-block d-md-none title-box">
+                Login
+            </div>
             <form action="{{ path('signin') }}" method="post">
                 <div>
                     <label for="username">Username:</label>
@@ -33,7 +36,7 @@
             <div class="d-block d-md-none">
                 <a href="{{ path("signup") }}">Register</a>
             </div>
-            <a href="{{ path("forgot_password") }}">Forgot Password?</a>
+            <a href="{{ path("forgot_password") }}">Forgot Password ?</a>
         </div>
     </div>
 {% endblock %}
