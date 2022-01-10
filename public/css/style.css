@@ -166,6 +166,10 @@ input[type=password] {
   border-bottom: 1px solid gray;
 }
 
+.form-error-comment input[type=text] {
+  outline-color: red;
+}
+
 .form-container > .form-error > input[type=text],
 .form-container > .form-error > input[type=email],
 .form-container > .form-error > input[type=password] {
@@ -180,10 +184,6 @@ input[type=password] {
 .comment-form input {
   width: 50%;
   outline: auto;
-}
-
-.form-error-comment input[type=text] {
-  outline-color: red;
 }
 
 .form-error-comment > form > ul > li {
