@@ -38,24 +38,6 @@
   cursor: pointer;
 }
 
-.title-box {
-  font-size: xx-large;
-  text-align: center;
-  padding-top: 5%;
-}
-
-.middle-box {
-  height: 50%;
-  border: 1px solid black;
-  padding-left: 5%;
-  padding-right: 5%;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  -ms-transform: translate(-50%, -30%);
-  transform: translate(-50%, -30%);
-}
-
 .trick-view {
   border: 1px solid black;
   position: relative;
@@ -91,11 +73,11 @@
 .trick-main-image {
   position: relative;
   width: 100%;
+
 }
 
 .trick-main-image img {
   width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: center;
 }
@@ -191,6 +173,20 @@ input[type=password] {
 }
 
 .form-container > div > ul > li {
+  color: red;
+  list-style-type: none;
+}
+
+.comment-form input {
+  width: 50%;
+  outline: auto;
+}
+
+.form-error-comment input[type=text] {
+  outline-color: red;
+}
+
+.form-error-comment > form > ul > li {
   color: red;
   list-style-type: none;
 }

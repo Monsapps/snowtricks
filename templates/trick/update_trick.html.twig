@@ -46,11 +46,17 @@ window.onload = function () {
                 </div>
                 <div class="row mb-2 px-3">
                     <div class="col">
-                        <div class="row flex-row flex-nowrap overflow-auto trick-more-medias" id="more-medias">
+                        <div class="row d-block d-md-none">
+                            <div class="col text-center">
+                                <input type="button" value="See medias" class="btn btn-success" id="see-medias">
+                            </div>
+                        </div>
+                        <div class="row flex-row flex-nowrap overflow-auto trick-more-medias d-none d-md-block" id="more-medias">
                             <script>
                                 const imgSrc = document.querySelector("#image-src");
                                 const mainEdit = document.querySelector("#trick-details-edit");
                                 const moreMedia = document.querySelector("#more-medias");
+                                var mediaCount = 0;
                             </script>
                             {% for image in trick.images %}
                                 {% if loop.index == 1 %}
@@ -61,6 +67,7 @@ window.onload = function () {
                                             <a href="{{ path('update_image', {id: image.idTrickImage}) }}" data-update-image data-token="{{ csrf_token('update' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
                                             <a href="{{ path('delete_image', {id: image.idTrickImage}) }}" data-delete-image data-token="{{ csrf_token('delete' ~ image.idTrickImage )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
                                             `;
+                                        mediaCount += 1;
                                     </script>
                                 {% else %}
                                     <script>
@@ -74,6 +81,7 @@ window.onload = function () {
                                                     </div>
                                                 </div>
                                             </div>`;
+                                            mediaCount += 1;
                                     </script>
                                 {% endif %}
                             {% else %}
@@ -95,6 +103,7 @@ window.onload = function () {
                                                     </div>
                                                 </div>
                                             </div>`;
+                                            mediaCount += 1;
                                 </script>
                             {% endfor %}
                         </div>
@@ -103,9 +112,9 @@ window.onload = function () {
                 <div class="row px-0">
                     <div class="col mb-4" style="text-align: center;">
                         <span class="badge bg-primary">{{ trick.trickType }}</span>
-                        <span class="badge bg-success">Created : {{ trick.creationDateTrick|date('Y-m-d H:i') }}</span>
+                        <span class="badge bg-success">Created : {{ trick.creationDateTrick|date('Y/m/d H:i') }}</span>
                         {% if trick.modificationDateTrick %}
-                            <span class="badge bg-info text-dark">Edited : {{ trick.modificationDateTrick|date("Y-m-d H:i") }}</span>
+                            <span class="badge bg-info text-dark">Edited : {{ trick.modificationDateTrick|date("Y/m/d H:i") }}</span>
                         {% endif %}
                     </div>
                 </div>
@@ -115,4 +124,7 @@ window.onload = function () {
             </div>
         </div>
     </div>
+    <script>
+        showHideMedias();
+    </script>
 {% endblock %}

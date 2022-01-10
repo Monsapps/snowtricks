@@ -310,3 +310,21 @@ function updateAvatarListener() {
         .catch((e) => console.log(e));
     });
 }
+
+/**
+ * Show hide `See medias` button
+ */
+function showHideMedias() {
+
+    let seeMedias = document.querySelector("#see-medias");
+    if(mediaCount <= 1) {
+        // hide See medias button no medias to display
+        seeMedias.style.display = "none";
+    }
+    seeMedias.addEventListener("click", function() {
+        // remove d-none bootstrap
+        document.querySelector("#more-medias").classList.remove("d-none");
+        this.style.display = "none";
+    });
+
+}
