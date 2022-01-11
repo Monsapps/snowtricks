@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickMediaController extends AbstractController
 {
-        /**
+    /**
      * @Route("/update/media/{id}", name="update_media", methods={"POST", "GET"})
      */
     public function updateMedia(
@@ -39,6 +39,7 @@ class TrickMediaController extends AbstractController
 
             $entityManager = $managerRegistry->getManager();
             $entityManager->flush();
+            
         }
 
         return $this->renderForm("trick/_trick_media_form.html.twig", array(

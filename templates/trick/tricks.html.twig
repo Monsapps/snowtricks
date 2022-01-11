@@ -4,9 +4,12 @@
 
 {% block body %}
     <div class="container" id="main">
-        <div class="title-box">
+        <div class="fs-1 text-center">
             Tricks
         </div>
+        {% if is_granted("ROLE_CONFIRMED_USER") %}
+            <a href="{{ path('add_trick') }}">Create new</a>
+        {% endif %}
         <div class="row row-cols-1 row-cols-md-5 pt-2">
         {% for trick in tricks %}
             {% set imagePath = 'default.jpg' %}
@@ -18,8 +21,6 @@
                 No trick found
             {% endfor %}
         </div>
-
-        <a href="{{ path('add_trick') }}">Create new</a>
     </div>
 
     <script>

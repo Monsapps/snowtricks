@@ -15,12 +15,11 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid container-md">
+    <div class="container-fluid container-md mt-3 mt-md-5">
         <div class="row justify-content-center mx-0">
             <div class="col-12 col-md-10 px-0 trick-details">
                 <div class="row mb-3 px-0">
-                    <div class="col">
-                        <div class="trick-main-image">
+                    <div class="col trick-main-image">
                             <img id="image-src" alt="{{ trick.nameTrick }}" />
                             <div class="trick-main-name">{{ trick.nameTrick }}</div>
                             {% if is_granted("ROLE_CONFIRMED_USER") %}
@@ -29,24 +28,31 @@
                                     <a href="{{ path('delete_trick', {'slugTrick': trick.slugTrick}) }}" data-delete-trick data-token="{{ csrf_token('delete' ~ trick.idTrick )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
                                 </div>
                             {% endif %}
-                        </div>
                     </div>
                 </div>
                 <div class="row mb-2 px-3">
                     <div class="col">
-                        <div class="row flex-row flex-nowrap overflow-auto" id="more-medias">
+                        <div class="row d-block d-md-none">
+                            <div class="col text-center">
+                                <input type="button" value="See medias" class="btn btn-success" id="see-medias">
+                            </div>
+                        </div>
+                        <div class="row flex-row flex-nowrap overflow-auto d-none d-md-block" id="more-medias">
                             <script>
                                 const imgSrc = document.querySelector("#image-src");
                                 const moreMedia = document.querySelector("#more-medias");
+                                var mediaCount = 0;
                             </script>
                             {% for image in trick.images %}
                                 {% if loop.index == 1 %}
                                     <script>
                                         imgSrc.src = `{{ asset('/images/tricks/'~image.pathTrickImage) }}`;
+                                        mediaCount += 1;
                                     </script>
                                 {% else %}
                                     <script>
                                         moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4 trick-more-medias"><img src="{{ asset('/images/tricks/'~image.pathTrickImage) }}" alt="{{ trick.nameTrick }}" /></div>`;
+                                        mediaCount += 1;
                                     </script>
                                 {% endif %}
                             {% else %}
@@ -59,6 +65,7 @@
                                 <script>
                                     var embedded = getEmbedTag(`{{ media.urlTrickMedia }}`);
                                     moreMedia.innerHTML += `<div class="col-7 col-md-6 col-lg-5 col-xl-4 col-xxl-4">${embedded}</div>`;
+                                    mediaCount += 1;
                                 </script>
                             {% endfor %}
                         </div>
@@ -66,24 +73,24 @@
                 </div>
                 <div class="row mb-4 px-5">
                     <div class="col">
-                        {{ trick.descriptionTrick }}
+                        {{ trick.descriptionTrick|nl2br }}
                     </div>
                 </div>
                 <div class="row px-0">
-                    <div class="col mb-4" style="text-align: center;">
+                    <div class="col mb-4 text-center">
                         <span class="badge bg-primary">{{ trick.trickType }}</span>
-                        <span class="badge bg-success">Created : {{ trick.creationDateTrick|date('Y-m-d H:i') }}</span>
+                        <span class="badge bg-success">Created : {{ trick.creationDateTrick|date('Y/m/d H:i') }}</span>
                         {% if trick.modificationDateTrick %}
-                            <span class="badge bg-info text-dark">Edited : {{ trick.modificationDateTrick|date("Y-m-d H:i") }}</span>
+                            <span class="badge bg-info text-dark">Edited : {{ trick.modificationDateTrick|date("Y/m/d H:i") }}</span>
                         {% endif %}
                         <hr style="width: 80%; margin: auto; height: 2px; margin-top: 1%;">
                     </div>
                 </div>
                 <div class="row px-0">
-                    <div class="col mb-4" style="text-align: center;">
+                    <div class="col mb-4 text-center">
                         {% if is_granted("ROLE_CONFIRMED_USER") %}
-                            <div class="row justify-content-md-center mx-auto my-2">
-                                <div class="col-2 col-md-2 col-lg-1">
+                            <div class="row justify-content-md-center align-items-center mx-auto my-2">
+                                <div class="col-2 col-md-2 col-lg-1 text-center">
                                     {% if user.avatar.avatarPath is not null %}
                                         <img src="{{ asset('/images/avatars/'~user.avatar.avatarPath) }}" alt="My avatar" class="comment-avatar">
                                     {% else %}
@@ -91,10 +98,18 @@
                                     {% endif %}
                                     <a href="{{ path('update_avatar') }}" data-update-avatar>Update</a>
                                 </div>
-                                <div class="col-9 col-md-6">
-                                    {{ form(form) }}
+                                <div class="col-9 col-md-8 comment-form {{  form_errors(form.contentComment) ? 'form-error-comment' : '' }}">
+                                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                                            {{ form_widget(form.contentComment) }}   
+                                            {{ form_widget(form.save) }}
+                                    {{ form_rest(form) }}
+                                    {{ form_errors(form.contentComment) }} 
+                                    
                                 </div>
                             </div>
+                            <script>
+                                updateAvatarListener();
+                            </script>
                         {% else %}
                             You must be logged in to post a comment
                         {% endif %}
@@ -151,7 +166,7 @@
                     }
                 )
                 if(totalComment < 1) {
-                    commentDiv.innerHTML += "<div>No comment</div>";
+                    commentDiv.innerHTML += "<div class=\"text-center\">No comment</div>";
                 }
 
                 // Update the generated url for next request
@@ -165,11 +180,11 @@
 
         deleteTrickListener();
 
-        updateAvatarListener();
-
         loadComment.addEventListener("click", function() {
             loadComments();
         });
+
+        showHideMedias();
 
     }
     </script>

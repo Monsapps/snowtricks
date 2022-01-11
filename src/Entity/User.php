@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(
  *      fields={"email"},
  *      errorPath="email",
- *      message="Email already exist, forgot password?")
+ *      message="Email already exist, forgot password ?")
  * @UniqueEntity(
  *      fields={"name"},
  *      errorPath="name",
@@ -46,9 +46,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", name="password_user")
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "Password minimum length : 6 characters")
      * @Assert\NotBlank(message = "Password must be set.")
      */
     public $password;
@@ -59,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      name="email_user",
      *      unique=true)
      * @Assert\NotBlank(message = "Email must be set.")
-     * @Assert\Email(message = "You must enter a valid email adress.")
+     * @Assert\Email(message = "You must enter a valid email address.")
      */
     public $email;
 

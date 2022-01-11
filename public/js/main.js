@@ -182,6 +182,40 @@ function addMediaListener() {
         .forEach((btn) => btn.addEventListener("click", addFormToCollection));
 }
 
+function updateModalMedia() {
+    let modalContent = document.querySelector("#modal-body");
+    let preview = document.querySelector("#media-preview");
+    let urlMediaInput = document.querySelector("#trick_media_urlTrickMedia");
+
+    // Add dynamically embed tag
+    var getTag = getEmbedTag(urlMediaInput.value);
+    preview.innerHTML = getTag;
+
+    urlMediaInput.addEventListener("change", function(e) {
+        var getTag = getEmbedTag(urlMediaInput.value);
+        preview.innerHTML = getTag;
+    });
+
+    let form = document.querySelector("form[name='trick_media']");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let data = new FormData(form);
+        fetch(form.getAttribute("action"), {
+            method: form.getAttribute("method"),
+            body: data
+        })
+        .then((response) => response.text())
+        .then((html) => {
+            modalContent.innerHTML = html;
+            
+            updateModalMedia()
+        })
+        .catch((e) => console.log(e));
+    });
+
+}
+
 /**
  * Update medias listener
  */
@@ -204,36 +238,11 @@ function updateMediaListener() {
 
                 modalContent.innerHTML = content;
 
-                let form = document.querySelector("form[name='trick_media']");
-                let preview = document.querySelector("#media-preview");
-                let urlMediaInput = document.querySelector("#trick_media_urlTrickMedia");
-
-                // Add dynamically embed tag
-                var getTag = getEmbedTag(urlMediaInput.value);
-                preview.innerHTML = getTag;
-
-                urlMediaInput.addEventListener("change", function(e) {
-                    var getTag = getEmbedTag(urlMediaInput.value);
-                    preview.innerHTML = getTag;
-                });
-
-                form.addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    let data = new FormData(form);
-                    fetch(form.getAttribute("action"), {
-                        method: form.getAttribute("method"),
-                        body: data
-                    })
-                    .then((response) => response.text())
-                    .then((html) => {
-                        modalContent.innerHTML = html;
-                    })
-                    .catch((e) => console.log(e));
+                updateModalMedia();
                 });
             })
             .catch((e) => console.log(e));
         });
-    });
 }
 
 /**
@@ -309,4 +318,22 @@ function updateAvatarListener() {
         })
         .catch((e) => console.log(e));
     });
+}
+
+/**
+ * Show hide `See medias` button
+ */
+function showHideMedias() {
+
+    let seeMedias = document.querySelector("#see-medias");
+    if(mediaCount <= 1) {
+        // hide See medias button no medias to display
+        seeMedias.style.display = "none";
+    }
+    seeMedias.addEventListener("click", function() {
+        // remove d-none bootstrap
+        document.querySelector("#more-medias").classList.remove("d-none");
+        this.style.display = "none";
+    });
+
 }
