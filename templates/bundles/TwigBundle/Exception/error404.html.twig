@@ -1,1 +1,25 @@
-oops
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks - 404 Page not found{% endblock %}
+
+{% block body %}
+    <div class="container-fluid container-md vh-100">
+        <div class="d-none d-md-block fs-1 text-center">
+            Page not found
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col col-md-7 col-lg-6 col-xl-5 col-xxl-4 mx-4 mx-md-2 my-4 py-md-4 px-3 px-md-5 border border-dark text-center">
+                <div class="d-block d-md-none mt-1 fs-1 text-center">
+                    Page not found
+                </div>
+                <div class="row row-cols-1 mt-5 mt-md-3">
+                    <div class="col text-center error-container">
+                        <img src="{{ asset('/images/errors/snowman.png') }}" alt="Snowman fatal error by Thierry Fousse" >
+                         The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

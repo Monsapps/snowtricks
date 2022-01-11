@@ -157,6 +157,7 @@
 /**
  * Form style
  **/
+
 input[type=text],
 input[type=email],
 input[type=password] {
@@ -186,7 +187,17 @@ input[type=password] {
   outline: auto;
 }
 
+.text-input-default {
+  border: 1px solid black !important;
+}
+
 .form-error-comment > form > ul > li {
   color: red;
   list-style-type: none;
+}
+
+.error-container img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 }

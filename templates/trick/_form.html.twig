@@ -32,6 +32,9 @@
         <div class="col-12 col-md-10 mx-auto">
             {{ form_label(form.medias) }} <button type="button" class="add_item_link" data-collection-holder-class="medias">Add media</button>
             <ul class="medias" data-index="{{ form.medias|length > 0 ? form.medias|last.medias.name + 1 : 0 }}" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
+
+            {{ form_help(form.medias) }}
+            {% do form.medias.setRendered %}
         </div>
     </div>
     <div class="row mb-4 px-5">

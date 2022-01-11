@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\File as FileFile;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
 
@@ -32,17 +31,28 @@ class TrickType extends AbstractType
 
             $builderInterface
             ->add("nameTrick", TextType::class, [
-                "help" => "Trick name"
+                "label_attr" => [
+                    "class" => "d-block"
+                ],
+                "attr" => [
+                    "class" => "text-input-default"
+                ]
             ]);
 
         }
 
         $builderInterface
         ->add("descriptionTrick", TextareaType::class, [
-                "help" => "Trick description"
+                "label" => false,
+                "attr" => [
+                    "rows" => "10"
+                ]
             ])
         ->add('images', FileType::class, [
-            "label" => false,
+            "label" => "Add image(s)",
+            "label_attr" => [
+                "class" => "d-block"
+            ],
             "multiple" => true,
             "mapped" => false,
             "required" => false,
@@ -60,6 +70,7 @@ class TrickType extends AbstractType
         ])
         ->add('medias', CollectionType::class, [
             "label" => false,
+            "help" => "(ex: https://www.youtube.com/watch?v=..., https://www.dailymotion.com/video/...)",
             "entry_type" => UrlType::class,
             "prototype" => true,
             "allow_add" => true,
@@ -69,13 +80,15 @@ class TrickType extends AbstractType
         ])
         ->add("trickType", EntityType::class, [
             "class" => EntityTrickType::class,
+            "label" => false,
             "choice_label" => "nameTrickType",
-            "placeholder" => "Select trick type"
+            "placeholder" => "Groups"
         ]);
 
         if($option["createType"]) {
 
             $builderInterface->add("addNewType", CheckboxType::class, [
+                "label" => "Add new group",
                 "mapped" => false,
                 "required" => false
             ]);
@@ -84,7 +97,10 @@ class TrickType extends AbstractType
 
                 if($data === "1") {
                     $form->add("newTrickType", TextType::class, [
-                        "mapped" => false
+                        "mapped" => false,
+                        "attr" => [
+                            "class" => "text-input-default"
+                        ]
                     ]);
                 }
     
