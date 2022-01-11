@@ -59,14 +59,14 @@
             </div>
         {% endfor %}
         {% for message in app.flashes("negative-response") %}
-            <div class="alert alert-success">
+            <div class="alert alert-danger">
                 {{ message }}
             </div>
         {% endfor %}
 
         {% block body %}{% endblock %}
 
-        <div class="d-md-none d-lg-none d-xl-none">
+        <div class="d-block d-md-none">
 			<br><br>
         </div>
 		<footer class="container d-none d-md-block">
