@@ -10,6 +10,8 @@ use App\Entity\TrickImage;
 use App\Entity\TrickMedia;
 use App\Entity\TrickType as EntityTrickType;
 use App\Repository\TrickRepository;
+use App\Service\TrickService;
+use App\Service\TrickTypeService;
 use App\Type\CommentType;
 use App\Type\TrickType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,7 +41,9 @@ class TrickController extends AbstractController
      */
     public function addTrickPage(
         Request $request,
-        ManagerRegistry $managerRegistry)
+        ManagerRegistry $managerRegistry,
+        TrickService $trickService,
+        TrickTypeService $trickTypeService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -55,8 +59,8 @@ class TrickController extends AbstractController
 
             if($trickForm->get("addNewType")->getData() === true) {
                 // Create new trick type
-                $trickType = new EntityTrickType();
-                $trickType->setName($trickForm->get("newTrickType")->getData());
+                $trickType = $trickTypeService->createTrickType($trickForm->get("newTrickType")->getData());
+                
                 $trick->setTrickType($trickType);
             }
 
@@ -82,15 +86,7 @@ class TrickController extends AbstractController
                 }
             }
 
-            // Add current timestamp
-            $dateTime = new \DateTime();
-            $trick->setCreationDateTrick($dateTime->setTimestamp(time()));
-
-            // Slug name for SEO
-            $slugger = new AsciiSlugger();
-            $slug = $slugger->slug($trickForm->get("nameTrick")->getData());
-
-            $trick->setSlugTrick($slug);
+            $trickService->addGenerateInfo($trick);
 
             $entityManager->persist($trick);
             $entityManager->flush();
