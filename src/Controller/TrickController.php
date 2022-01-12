@@ -8,8 +8,9 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Entity\TrickImage;
 use App\Entity\TrickMedia;
-use App\Entity\TrickType as EntityTrickType;
 use App\Repository\TrickRepository;
+use App\Service\TrickImageService;
+use App\Service\TrickMediaService;
 use App\Service\TrickService;
 use App\Service\TrickTypeService;
 use App\Type\CommentType;
@@ -19,7 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickController extends AbstractController
 {
@@ -43,7 +43,8 @@ class TrickController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry,
         TrickService $trickService,
-        TrickTypeService $trickTypeService)
+        TrickTypeService $typeService,
+        TrickImageService $imageService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -58,23 +59,15 @@ class TrickController extends AbstractController
             $entityManager = $managerRegistry->getManager();
 
             if($trickForm->get("addNewType")->getData() === true) {
-                // Create new trick type
-                $trickType = $trickTypeService->createTrickType($trickForm->get("newTrickType")->getData());
-                
+
+                $trickType = $typeService->createTrickType($trickForm->get("newTrickType")->getData());
+
                 $trick->setTrickType($trickType);
             }
 
             $images = $trickForm->get("images")->getData();
-            foreach($images as $image) {
-                $imageName = md5(uniqid()).'.'.$image->guessExtension();
-                $image->move(
-                    $this->getParameter("trick_image_path"),
-                    $imageName
-                );
-                $imageEntity = new TrickImage();
-                $imageEntity->setPathTrickImage($imageName);
-                $trick->addImage($imageEntity);
-            }
+
+            $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
 
             $medias = $trickForm->get("medias")->getData();
             foreach($medias as $media) {
@@ -92,6 +85,7 @@ class TrickController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("positive-response", "Trick added successfully!");
+
             return $this->redirectToRoute("tricks");
         }
 
@@ -151,7 +145,8 @@ class TrickController extends AbstractController
     public function update(
         Trick $trick,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        ManagerRegistry $managerRegistry,
+        TrickImageService $imageService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
         
@@ -171,16 +166,8 @@ class TrickController extends AbstractController
             $entityManager = $managerRegistry->getManager();
 
             $images = $form->get("images")->getData();
-            foreach($images as $image) {
-                $imageName = md5(uniqid()).'.'.$image->guessExtension();
-                $image->move(
-                    $this->getParameter("trick_image_path"),
-                    $imageName
-                );
-                $imageEntity = new TrickImage();
-                $imageEntity->setPathTrickImage($imageName);
-                $trick->addImage($imageEntity);
-            }
+
+            $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
 
             $medias = $form->get("medias")->getData();
             foreach($medias as $media) {

@@ -91,10 +91,10 @@
                         {% if is_granted("ROLE_CONFIRMED_USER") %}
                             <div class="row justify-content-md-center align-items-center mx-auto my-2">
                                 <div class="col-2 col-md-2 col-lg-1 text-center">
-                                    {% if user.avatar.avatarPath is not null %}
+                                    {% if user.avatar is not null and user.avatar is defined %}
                                         <img src="{{ asset('/images/avatars/'~user.avatar.avatarPath) }}" alt="My avatar" class="comment-avatar">
                                     {% else %}
-                                        <img src="/images/avatars/default.png" alt="My avatar" class="comment-avatar">
+                                        <img src="{{ asset('/images/avatars/default.png') }}" alt="My avatar" class="comment-avatar">
                                     {% endif %}
                                     <a href="{{ path('update_avatar') }}" data-update-avatar>Update</a>
                                 </div>
