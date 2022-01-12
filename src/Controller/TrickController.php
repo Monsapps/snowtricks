@@ -6,11 +6,9 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Entity\TrickImage;
 use App\Entity\TrickMedia;
 use App\Repository\TrickRepository;
 use App\Service\TrickImageService;
-use App\Service\TrickMediaService;
 use App\Service\TrickService;
 use App\Service\TrickTypeService;
 use App\Type\CommentType;
