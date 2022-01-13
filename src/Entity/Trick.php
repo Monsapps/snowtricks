@@ -126,6 +126,14 @@ class Trick
     }
 
     /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    /**
      * @return Collection|TrickImage[]
      */
     public function getImages(): Collection

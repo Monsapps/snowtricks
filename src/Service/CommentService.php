@@ -42,4 +42,22 @@ class CommentService
         $entityManager->persist($comment);
         $entityManager->flush();
     }
+
+    /**
+     * Remove all comment's trick
+     */
+    public function removeComments(Trick $trick)
+    {
+
+        $entityManager = $this->managerRegistry->getManager();
+
+        $comments = $trick->getComments();
+
+        foreach($comments as $comment) {
+
+            $entityManager->remove($comment);
+            
+        }
+        $entityManager->flush();
+    }
 }

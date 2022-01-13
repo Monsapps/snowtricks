@@ -21,6 +21,7 @@ class TrickService
     private $typeService;
     private $imageService;
     private $mediaService;
+    private $commentService;
 
     public function __construct(
         ManagerRegistry $managerRegistry,
@@ -29,7 +30,8 @@ class TrickService
         TrickTypeService $typeService,
         TrickImageService $imageService,
         TrickMediaService $mediaService,
-        UrlGeneratorInterface $router)
+        UrlGeneratorInterface $router,
+        CommentService $commentService)
     {
         $this->managerRegistry = $managerRegistry;
         $this->container = $container;
@@ -38,6 +40,7 @@ class TrickService
         $this->typeService = $typeService;
         $this->imageService = $imageService;
         $this->mediaService = $mediaService;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -131,9 +134,14 @@ class TrickService
     {
         $entityManager = $this->managerRegistry->getManager();
 
+        $this->imageService->removeImages($trick);
+
+        $this->mediaService->removeMedias($trick);
+
+        $this->commentService->removeComments($trick);
+
         $entityManager->remove($trick);
         $entityManager->flush();
-
     }
 
     /**
