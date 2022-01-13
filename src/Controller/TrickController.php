@@ -4,11 +4,11 @@
  */
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Entity\TrickMedia;
 use App\Repository\TrickRepository;
+use App\Service\CommentService;
 use App\Service\TrickImageService;
+use App\Service\TrickMediaService;
 use App\Service\TrickService;
 use App\Service\TrickTypeService;
 use App\Type\CommentType;
@@ -42,11 +42,12 @@ class TrickController extends AbstractController
         ManagerRegistry $managerRegistry,
         TrickService $trickService,
         TrickTypeService $typeService,
-        TrickImageService $imageService)
+        TrickImageService $imageService,
+        TrickMediaService $mediaService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
-        $trick = new Trick();
+        $trick = $trickService->newTrick();
 
         $trickForm = $this->createForm(TrickType::class, $trick);
 
@@ -68,14 +69,8 @@ class TrickController extends AbstractController
             $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
 
             $medias = $trickForm->get("medias")->getData();
-            foreach($medias as $media) {
-                // If media box is not empty
-                if(!empty($media)) {
-                    $mediaEntity = new TrickMedia();
-                    $mediaEntity->setUrlTrickMedia($media);
-                    $trick->addMedia($mediaEntity);
-                }
-            }
+
+            $mediaService->addMediasToTrick($medias, $trick);
 
             $trickService->addGenerateInfo($trick);
 
@@ -100,24 +95,19 @@ class TrickController extends AbstractController
     public function trick(
         Trick $trick,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        ManagerRegistry $managerRegistry,
+        CommentService $commentService)
     {
         $user = $this->getUser();
 
-        $comment = new Comment();
+        $comment = $commentService->newComment();
         $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $comment->setTrick($trick);
-
-            // Add current timestamp
-            $dateTime = new \DateTime();
-            $comment->setDateComment($dateTime->setTimestamp(time()));
-
-            $comment->setUser($user);
+            $commentService->addInfo($comment, $trick, $user);
 
             // Push the comment to the database
             $entityManager = $managerRegistry->getManager();
@@ -137,14 +127,14 @@ class TrickController extends AbstractController
 
     /**
      * Update trick page
-     * 
      * @Route("/tricks/update/{slugTrick}", name="update_trick")
      */
     public function update(
         Trick $trick,
         Request $request,
         ManagerRegistry $managerRegistry,
-        TrickImageService $imageService)
+        TrickImageService $imageService,
+        TrickMediaService $mediaService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
         
@@ -168,14 +158,8 @@ class TrickController extends AbstractController
             $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
 
             $medias = $form->get("medias")->getData();
-            foreach($medias as $media) {
-                // If media box is not empty
-                if(!empty($media)) {
-                    $mediaEntity = new TrickMedia();
-                    $mediaEntity->setUrlTrickMedia($media);
-                    $trick->addMedia($mediaEntity);
-                }
-            }
+
+            $mediaService->addMediasToTrick($medias, $trick);
 
             // Add current timestamp
             $dateTime = new \DateTime();

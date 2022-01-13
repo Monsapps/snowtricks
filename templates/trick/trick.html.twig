@@ -19,15 +19,17 @@
         <div class="row justify-content-center mx-0">
             <div class="col-12 col-md-10 px-0 trick-details">
                 <div class="row mb-3 px-0">
-                    <div class="col trick-main-image">
+                    <div class="col">
+                        <div class="trick-main-image">
                             <img id="image-src" alt="{{ trick.nameTrick }}" />
                             <div class="trick-main-name">{{ trick.nameTrick }}</div>
                             {% if is_granted("ROLE_CONFIRMED_USER") %}
                                 <div class="trick-details-edit">
-                                    <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" /></a>
-                                    <a href="{{ path('delete_trick', {'slugTrick': trick.slugTrick}) }}" data-delete-trick data-token="{{ csrf_token('delete' ~ trick.idTrick )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" /></a>
+                                    <a href="{{ path('update_trick', {'slugTrick': trick.slugTrick}) }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png" style="width:30px;height:30px;" alt="Edit image"/></a>
+                                    <a href="{{ path('delete_trick', {'slugTrick': trick.slugTrick}) }}" data-delete-trick data-token="{{ csrf_token('delete' ~ trick.idTrick )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png" style="width:30px;height:30px;" alt="Delete image" /></a>
                                 </div>
                             {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-2 px-3">
@@ -37,7 +39,11 @@
                                 <input type="button" value="See medias" class="btn btn-success" id="see-medias">
                             </div>
                         </div>
-                        <div class="row flex-row flex-nowrap overflow-auto d-none d-md-block" id="more-medias">
+                    </div>
+                </div>
+                <div class="row mb-2 px-3">
+                    <div class="col">
+                        <div class="row flex-row flex-nowrap overflow-auto d-none d-md-flex" id="more-medias">
                             <script>
                                 const imgSrc = document.querySelector("#image-src");
                                 const moreMedia = document.querySelector("#more-medias");
@@ -104,7 +110,6 @@
                                             {{ form_widget(form.save) }}
                                     {{ form_rest(form) }}
                                     {{ form_errors(form.contentComment) }} 
-                                    
                                 </div>
                             </div>
                             <script>

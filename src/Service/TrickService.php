@@ -10,6 +10,15 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 class TrickService
 {
     /**
+     * Create Trick
+     * @return Trick
+     */
+    public function newTrick(): Trick
+    {
+        return new Trick();
+    }
+
+    /**
      * Add current date and slug to trick
      * @param Trick $trick
      * @return void

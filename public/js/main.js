@@ -209,7 +209,7 @@ function updateModalMedia() {
         .then((html) => {
             modalContent.innerHTML = html;
             
-            updateModalMedia()
+            updateModalMedia();
         })
         .catch((e) => console.log(e));
     });
