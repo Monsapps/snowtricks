@@ -39,7 +39,7 @@
             loadMore.style.display = "none";
         }
 
-        if(trickDisplayed > 5) {
+        if(trickDisplayed > 10) {
             topButton.style.visibility = "visible";
         }
     }
@@ -64,7 +64,7 @@
                     if(trick.imagePath !== "") {
                         image = trick.imagePath;
                     }
-                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'id': '${trick.id}', 'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}' } %}`;
+                    trickDiv.innerHTML += `{% include "trick/_trick_view.html.twig" with {'id': '${trick.id}', 'name': '${trick.name}', 'slug': '${trick.slug}', 'image': '${image}', 'update' : '${trick.updateUrl}', 'delete': '${trick.deleteUrl}', 'token': '${trick.token}' } %}`;
                     trickDisplayed += 1;
                     showLoadMore();
                 }

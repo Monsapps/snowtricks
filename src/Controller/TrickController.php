@@ -7,13 +7,9 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use App\Service\CommentService;
-use App\Service\TrickImageService;
-use App\Service\TrickMediaService;
 use App\Service\TrickService;
-use App\Service\TrickTypeService;
 use App\Type\CommentType;
 use App\Type\TrickType;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,11 +35,7 @@ class TrickController extends AbstractController
      */
     public function addTrickPage(
         Request $request,
-        ManagerRegistry $managerRegistry,
-        TrickService $trickService,
-        TrickTypeService $typeService,
-        TrickImageService $imageService,
-        TrickMediaService $mediaService)
+        TrickService $trickService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -55,27 +47,7 @@ class TrickController extends AbstractController
         
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
 
-            $entityManager = $managerRegistry->getManager();
-
-            if($trickForm->get("addNewType")->getData() === true) {
-
-                $trickType = $typeService->createTrickType($trickForm->get("newTrickType")->getData());
-
-                $trick->setTrickType($trickType);
-            }
-
-            $images = $trickForm->get("images")->getData();
-
-            $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
-
-            $medias = $trickForm->get("medias")->getData();
-
-            $mediaService->addMediasToTrick($medias, $trick);
-
-            $trickService->addGenerateInfo($trick);
-
-            $entityManager->persist($trick);
-            $entityManager->flush();
+            $trickService->addTrick($trickForm, $trick);
 
             $this->addFlash("positive-response", "Trick added successfully!");
 
@@ -95,7 +67,6 @@ class TrickController extends AbstractController
     public function trick(
         Trick $trick,
         Request $request,
-        ManagerRegistry $managerRegistry,
         CommentService $commentService)
     {
         $user = $this->getUser();
@@ -107,12 +78,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $commentService->addInfo($comment, $trick, $user);
-
-            // Push the comment to the database
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $commentService->addComment($comment, $trick, $user);
 
             $this->addFlash("positive-response", "Comment added successfully!");
             return $this->redirectToRoute("tricks_details", ["slugTrick" => $trick->getSlugTrick()]);
@@ -132,9 +98,7 @@ class TrickController extends AbstractController
     public function update(
         Trick $trick,
         Request $request,
-        ManagerRegistry $managerRegistry,
-        TrickImageService $imageService,
-        TrickMediaService $mediaService)
+        TrickService $trickService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
         
@@ -151,21 +115,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager = $managerRegistry->getManager();
-
-            $images = $form->get("images")->getData();
-
-            $imageService->addImagesToTrick($images, $this->getParameter("trick_image_path"), $trick);
-
-            $medias = $form->get("medias")->getData();
-
-            $mediaService->addMediasToTrick($medias, $trick);
-
-            // Add current timestamp
-            $dateTime = new \DateTime();
-            $trick->setModificationDateTrick($dateTime->setTimestamp(time()));
-
-            $entityManager->flush();
+            $trickService->updateTrick($form, $trick);
             
             $this->addFlash("positive-response", "Trick updated successfully");
             return $this->redirectToRoute("tricks_details", ["slugTrick" => $trick->getSlugTrick()]);
@@ -185,17 +135,16 @@ class TrickController extends AbstractController
     public function delete(
         Trick $trick,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        TrickService $trickService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $data = json_decode($request->getContent(), true);
-        if($this->isCsrfTokenValid('delete'.$trick->getIdTrick(), $data['__token'])){
 
-            $entityManager = $managerRegistry->getManager();
+        if($this->isCsrfTokenValid('delete' . $trick->getIdTrick(), $data["__token"])){
 
-            $entityManager->remove($trick);
-            $entityManager->flush();
+            $trickService->deleteTrick($trick);
+
             return new JsonResponse(['success' => 1]);
         }
 
@@ -210,7 +159,7 @@ class TrickController extends AbstractController
     public function getTrick(
         int $limit,
         int $page,
-        ManagerRegistry $managerRegistry)
+        TrickService $trickService)
     {
 
         if(!is_numeric($limit) || !is_numeric($page)) {
@@ -218,42 +167,14 @@ class TrickController extends AbstractController
         }
 
         $offset = ($page > 0) ? (($page - 1) * $limit) : 0 ;
-        
-        $trickRepo = $managerRegistry->getRepository(Trick::class);
 
-        $tricks = $trickRepo->findBy(
-            array(),
-            array('creationDateTrick' => 'DESC'),
-            $limit,
-            $offset
-        );
-    
-        $tricksArray = [];
-        foreach($tricks as $trick) {
+        $tricks = $trickService->getTricksForJson($limit, $offset);
 
-            $image = "";
-            if($trick->getImages()[0] != null) {
-                $image = $trick->getImages()[0]->getPathTrickImage();
-            }
-            
-            $tricksArray[] = [
-                "id" => $trick->getIdTrick(),
-                "name" => $trick->getNameTrick(),
-                "slug" => $trick->getSlugTrick(),
-                "imagePath" => $image
-            ];
-        }
-
-        $allTricks = $trickRepo->findBy(
-            array(),
-            array()
-        );
-
-        $count = count($allTricks);
+        $count = $trickService->countTrick();
 
         return new JsonResponse([
             "count" => $count,
-            "tricks" => $tricksArray
+            "tricks" => $tricks
         ]);
     }
 }

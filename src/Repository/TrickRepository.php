@@ -18,4 +18,32 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function getTricks(
+        int $limit,
+        int $offset): array
+    {
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder()
+        ->select("t")
+        ->from("App\Entity\Trick", "t")
+        ->orderBy("t.idTrick", "DESC")
+        ->setMaxResults($limit)
+        ->setFirstResult($offset);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function countTricks(): int
+    {
+        $entityManager = $this->getEntityManager();
+        // return count count
+        $query = $entityManager->createQuery("
+        SELECT count(t)
+        FROM App\Entity\Trick t
+        ");
+        
+        return $query->getSingleScalarResult();
+    }
+
 }

@@ -16,7 +16,7 @@
             {% for image in trick.images|slice(0, 1) %}
                 {% set imagePath = image.pathTrickImage %}
             {% endfor %}
-                    {% include 'trick/_trick_view.html.twig' with {'id': trick.idTrick, 'name': trick.nameTrick, 'slug': trick.slugTrick, 'image': imagePath } %}
+                    {% include 'trick/trick_card.html.twig' with {'id': trick.idTrick, 'name': trick.nameTrick, 'slug': trick.slugTrick, 'image': imagePath } %}
             {% else %}
                 No trick found
             {% endfor %}
