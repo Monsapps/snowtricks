@@ -4,12 +4,10 @@
  */
 namespace App\Controller;
 
-use App\Entity\Avatar;
+use App\Service\AvatarService;
 use App\Type\AvatarType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,20 +20,14 @@ class AvatarController extends AbstractController
      */
     function updateAvatar(
         Request $request,
-        ManagerRegistry $managerRegistry)
+        ManagerRegistry $managerRegistry,
+        AvatarService $avatarService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $user = $this->getUser();
         
-        $avatar = new Avatar();
-
-        $updateAvatar = false;
-
-        if($user->avatar !== null) {
-            $avatar = $user->avatar;
-            $updateAvatar = true;
-        }
+        $avatar = $avatarService->createAvatar();
 
         $form = $this->createForm(AvatarType::class, $avatar, [
             "action" => $this->generateUrl("update_avatar"),
@@ -46,24 +38,11 @@ class AvatarController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if($updateAvatar) {
-                // Remove old avatar and add the new one
-                $filesystem = new Filesystem();
-                $filesystem->remove($this->getParameter("avatar_image_path") . "/" . $avatar ->getAvatarPath());
-            }
-
             $avatarFile = $form->get("image")->getData();
 
-            $avatarName = md5(uniqid()) .".". $avatarFile->guessExtension();
+            if(!$avatarService->addOrUpdate($user, $avatar, $avatarFile) ) {
 
-            try {
-                $avatarFile->move(
-                    $this->getParameter("avatar_image_path"),
-                    $avatarName
-                );
-            } catch(FileException $e) {
-
-                $this->addFlash("negative-response", "Error when moving file inside the server: ". $e);
+                $this->addFlash("negative-response", "Error when moving file inside the server");
 
                 return $this->renderForm("user/_user_avatar_form.html.twig", [
                     "avatar" => $avatar,
@@ -71,16 +50,6 @@ class AvatarController extends AbstractController
                 ]);
             }
 
-            $avatar->setAvatarPath($avatarName);
-            $entityManager = $managerRegistry->getManager();
-
-            if(!$updateAvatar) {
-                // add user to the new avatar entity
-                $avatar->setUser($user);
-                $entityManager->persist($avatar);
-            }
-
-            $entityManager->flush();
         }
 
         return $this->renderForm("user/_user_avatar_form.html.twig", [
