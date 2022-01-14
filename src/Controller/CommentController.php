@@ -4,14 +4,10 @@
  */
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Repository\CommentRepository;
+use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController
@@ -26,36 +22,12 @@ class CommentController extends AbstractController
         Trick $trick,
         int $limit,
         int $page,
-        CommentRepository $commentRepo)
+        CommentService $commentService)
     {
 
-        $offset = ($page > 0) ? (($page - 1) * $limit) : 0 ;
+        $commentArray = $commentService->getCommentForJson($trick, $limit, $page);
 
-        $comments = $commentRepo->getComments($trick, $limit, $offset);
-        $commentArray = [];
-
-        $package = new Package(new EmptyVersionStrategy);
-        $avatarBaseUrl = $package->getUrl("/images/avatars/");
-
-        foreach($comments as $comment) {
-            $user = $comment->getUser();
-            $avatar = $user->getAvatar();
-            $avatarPath = $avatarBaseUrl . "default.png";
-            if($avatar !== null) {
-                $avatarPath = $avatarBaseUrl . $avatar->getAvatarPath();
-            }
-
-            $dateFormat = $comment->getDateComment()->format('Y/m/d H:i');
-
-            $commentArray[] = [
-                "comment" => $comment->getContentComment(),
-                "date" => $dateFormat,
-                "username" => $user->getName(),
-                "avatarPath" => $avatarPath
-            ];
-        }
-
-        $count = $commentRepo->countComments($trick);
+        $count = $commentService->numberComment($trick);
 
         $newUrl = $this->generateUrl("get_comment", [
             "slugTrick" => $trick->getSlugTrick(),

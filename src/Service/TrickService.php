@@ -101,6 +101,9 @@ class TrickService
 
     }
 
+    /**
+     * Update trick
+     */
     public function updateTrick(Form $form, Trick $trick)
     {
         $entityManager = $this->managerRegistry->getManager();
