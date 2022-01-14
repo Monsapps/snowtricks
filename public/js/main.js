@@ -16,7 +16,13 @@ function deleteTrickListener() {
                     body: JSON.stringify({"__token": this.dataset.token})
                 })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    if(data.success) {
+                        this.parentElement.parentElement.parentElement.remove();
+                    } else {
+                        alert(data.error);
+                    }
+                })
                 .catch((e) => console.log(e));
             }
         });
@@ -209,7 +215,7 @@ function updateModalMedia() {
         .then((html) => {
             modalContent.innerHTML = html;
             
-            updateModalMedia()
+            updateModalMedia();
         })
         .catch((e) => console.log(e));
     });
@@ -252,17 +258,26 @@ function deleteMediaListener() {
     var deleteMedias = document.querySelectorAll("[data-delete-media]");
     deleteMedias.forEach((deleteMedia) => {
         deleteMedia.addEventListener("click", function(event) {
+
             event.preventDefault();
+
             if(confirm("Are you sure you want to delete this media?")) {
                 fetch(this.getAttribute("href"), {
                     method: "DELETE",
                     headers: {
+                        "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({"__token": this.dataset.token})
                 })
                 .then((response) => response.json())
-                .then((data) => console.log(data))
+                .then((data) => {
+                    if(data.success) {
+                        this.parentElement.remove();
+                    } else {
+                        alert(data.error);
+                    }
+                })
                 .catch((e) => console.log(e));
             }
         });

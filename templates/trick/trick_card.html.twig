@@ -7,12 +7,12 @@
 <div class="col">
     <div class="mb-3 trick-view" style="background-image: url('{{ imagePath }}')">
         <div class="trick-info">
-            <a href="{{ slug }}">{{ name }}</a>
+            <a href="{{ path('tricks_details', {slugTrick: slug})}}">{{ name }}</a>
         </div>
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             <div class="trick-edit">
-                <a href="{{ update }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"/></a>
-                <a href="{{ delete }}" data-delete-trick data-token="{{ token }}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png"/></a>
+                <a href="{{ path('update_trick', {slugTrick: slug})}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"/></a>
+                <a href="{{ path('delete_trick', {slugTrick: slug})}}" data-delete-trick data-token="{{ csrf_token('delete' ~ id )}}"><img src="https://img.icons8.com/ios-glyphs/30/000000/filled-trash.png"/></a>
             </div>
         {% endif %}
     </div>
