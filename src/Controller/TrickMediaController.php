@@ -5,8 +5,8 @@
 namespace App\Controller;
 
 use App\Entity\TrickMedia;
+use App\Service\TrickMediaService;
 use App\Type\TrickMediaType;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class TrickMediaController extends AbstractController
     public function updateMedia(
         TrickMedia $trickMedia,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        TrickMediaService $mediaService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -33,12 +33,7 @@ class TrickMediaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /*$media = $form->get("media")->getData();
-
-            $trickMedia->setUrlTrickMedia($media);*/
-
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->flush();
+            $mediaService->updateMedia();
             
         }
 
@@ -54,7 +49,7 @@ class TrickMediaController extends AbstractController
     public function deleteMedia(
         TrickMedia $trickMedia,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        TrickMediaService $mediaService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -62,9 +57,7 @@ class TrickMediaController extends AbstractController
 
         if($this->isCsrfTokenValid('delete'.$trickMedia->getId(), $data['__token'])){
 
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->remove($trickMedia);
-            $entityManager->flush();
+            $mediaService->removeMedia($trickMedia);
 
             return new JsonResponse(['success' => 1]);
         }

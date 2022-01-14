@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Service\AvatarService;
 use App\Type\AvatarType;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +19,6 @@ class AvatarController extends AbstractController
      */
     function updateAvatar(
         Request $request,
-        ManagerRegistry $managerRegistry,
         AvatarService $avatarService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");

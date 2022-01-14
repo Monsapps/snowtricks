@@ -5,10 +5,9 @@
 namespace App\Controller;
 
 use App\Entity\TrickImage;
+use App\Service\TrickImageService;
 use App\Type\TrickImageType;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +20,7 @@ class TrickImageController extends AbstractController
     public function updateImage(
         TrickImage $trickImage,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        TrickImageService $imageService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
@@ -34,23 +33,8 @@ class TrickImageController extends AbstractController
         // overwrite new image with the name of actual image
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $imageName = $trickImage->getPathTrickImage();
-            // Delete old image
-            $filesystem = new Filesystem();
-            $filesystem->remove($this->getParameter("trick_image_path") . "/" . $imageName);
+            $imageService->updateImage($trickImage, $form->get("image")->getData());
 
-            $image = $form->get("image")->getData();
-
-            $newImageName = md5(uniqid()).'.'.$image->guessExtension();
-            // Move new image to the directory
-            $image->move(
-                $this->getParameter("trick_image_path"),
-                $newImageName
-            );
-            $trickImage->setPathTrickImage($newImageName);
-
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->flush();
         }
 
         return $this->renderForm("trick/_trick_image_form.html.twig", array(
@@ -65,27 +49,16 @@ class TrickImageController extends AbstractController
     public function deleteImage(
         TrickImage $trickImage,
         Request $request,
-        ManagerRegistry $managerRegistry)
+        TrickImageService $imageService)
     {
         $this->denyAccessUnlessGranted("ROLE_CONFIRMED_USER");
 
         $data = json_decode($request->getContent(), true);
 
-        // On vérifie si le token est valide
         if($this->isCsrfTokenValid('delete'.$trickImage->getId(), $data['__token'])){
-            // On récupère le nom de l'image
-            $imagePath = $trickImage->getPathTrickImage();
 
-            // On supprime le fichier
-            $filesystem = new Filesystem();
-            $filesystem->remove($this->getParameter("trick_image_path") . "/" . $imagePath);
+            $imageService->removeImage($trickImage);
 
-            // On supprime l'entrée de la base
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->remove($trickImage);
-            $entityManager->flush();
-
-            // On répond en json
             return new JsonResponse(['success' => 1]);
         }
 

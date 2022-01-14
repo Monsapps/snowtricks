@@ -9,6 +9,7 @@ use App\Entity\TrickImage;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 class TrickImageService
 {
@@ -17,23 +18,21 @@ class TrickImageService
 
     public function __construct(
         ContainerInterface $container,
-        ManagerRegistry $managerRegistry
-    )
+        ManagerRegistry $managerRegistry)
     {
         $this->path = $container->getParameter("trick_image_path");
         $this->managerRegistry = $managerRegistry;
     }
+
     /**
      * Add images to Trick and move it to the proper folder
      */
     public function addImagesToTrick(array $images, Trick $trick)
     {
         foreach($images as $image) {
-            $imageName = md5(uniqid()).'.'.$image->guessExtension();
-            $image->move(
-                $this->path,
-                $imageName
-            );
+
+            $imageName = $this->moveFile($image);
+
             $imageEntity = new TrickImage();
             $imageEntity->setPathTrickImage($imageName);
             $trick->addImage($imageEntity);
@@ -46,17 +45,73 @@ class TrickImageService
     public function removeImages(Trick $trick)
     {
         $entityManager = $this->managerRegistry->getManager();
-        $filesystem = new Filesystem();
 
         $images = $trick->getImages();
 
         foreach($images as $image) {
-            $imagePath = $image->getPathTrickImage();
 
-            $filesystem->remove($this->path . "/" . $imagePath);
+            $this->removeFile($image);
 
             $entityManager->remove($image);
         }
+        $entityManager->flush();
+    }
+
+    /**
+     * Move image file & return filename
+     * @param TrickImage $trickImage
+     * @return string
+     */
+    public function moveFile(File $image): string
+    {
+        $imageName = md5(uniqid()).'.'.$image->guessExtension();
+        $image->move(
+            $this->path,
+            $imageName
+        );
+        return $imageName;
+    }
+
+    /**
+     * Remove image file 
+     * @param TrickImage $trickImage
+     */
+    public function removeFile(TrickImage $trickImage)
+    {
+        $filesystem = new Filesystem();
+
+        // Get image filename
+        $imagePath = $trickImage->getPathTrickImage();
+        // Remove file
+        $filesystem->remove($this->path . "/" . $imagePath);
+    }
+
+    /**
+     * Update image
+     */
+    public function updateImage(TrickImage $trickImage, File $image)
+    {
+        $this->removeFile($trickImage);
+
+        $imageName = $this->moveFile($image);
+
+        $trickImage->setPathTrickImage($imageName);
+
+        $entityManager = $this->managerRegistry->getManager();
+        $entityManager->flush();
+    }
+
+    /**
+     * Remove single image
+     */
+    public function removeImage(TrickImage $trickImage)
+    {
+        $this->removeFile($trickImage);
+
+        $entityManager = $this->managerRegistry->getManager();
+
+        $entityManager->remove($trickImage);
+
         $entityManager->flush();
     }
 }

@@ -19,6 +19,10 @@ class TrickMediaService
         $this->managerRegistry = $managerRegistry;
         
     }
+
+    /**
+     * Add medias to trick
+     */
     public function addMediasToTrick(array $medias, Trick $trick)
     {
         foreach($medias as $media) {
@@ -29,6 +33,27 @@ class TrickMediaService
                 $trick->addMedia($mediaEntity);
             }
         }
+    }
+
+    /**
+     * Store updated media url to database
+     */
+    public function updateMedia()
+    {
+        $entityManager = $this->managerRegistry->getManager();
+        $entityManager->flush();
+    }
+
+    /**
+     * Remove media from database
+     */
+    public function removeMedia(TrickMedia $trickMedia)
+    {
+        $entityManager = $this->managerRegistry->getManager();
+
+        $entityManager->remove($trickMedia);
+
+        $entityManager->flush();
     }
 
 
