@@ -27,6 +27,10 @@ class AvatarController extends AbstractController
         
         $avatar = $avatarService->createAvatar();
 
+        if($user->avatar !== null) {
+            $avatar = $user->avatar;
+        }
+
         $form = $this->createForm(AvatarType::class, $avatar, [
             "action" => $this->generateUrl("update_avatar"),
             "method" => "POST"
