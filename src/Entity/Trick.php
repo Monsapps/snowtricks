@@ -75,7 +75,7 @@ class Trick
      *      nullable=true)
      * @Assert\Type("\DateTimeInterface")
      */
-    protected $modificationDateTrick;
+    protected $editDateTrick;
 
     /**
      * @ORM\Column(
@@ -247,12 +247,12 @@ class Trick
 
     public function getModificationDateTrick(): ?DateTime
     {
-        return $this->modificationDateTrick;
+        return $this->editDateTrick;
     }
 
-    public function setModificationDateTrick(DateTime $modificationDateTrick): self
+    public function setModificationDateTrick(DateTime $editDateTrick): self
     {
-        $this->modificationDateTrick = $modificationDateTrick;
+        $this->editDateTrick = $editDateTrick;
 
         return $this;
     }
