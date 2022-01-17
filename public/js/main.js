@@ -30,6 +30,35 @@ function deleteTrickListener() {
 }
 
 /**
+ * Delete button event
+ */
+function deleteTrickButton() {
+    var trick = document.querySelector("#delete-trick");
+    trick.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        if(confirm("Are you sure you want to delete this trick?")) {
+            fetch(this.getAttribute("href"), {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"__token": this.dataset.token})
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.success) {
+                    document.location.href = data.tricksPage;
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch((e) => console.log(e));
+        }
+    }); 
+}
+
+/**
  * Add new trick type listener
  */
 function addNewTypeListener() {

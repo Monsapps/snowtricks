@@ -40,7 +40,7 @@
     <div class="row mb-4 px-5">
         <div class="col-12 col-md-10 text-end">
             {% if app.request.attributes.get('_route') == "update_trick" %}
-                <button type="button" class="btn btn-danger">Delete</button>
+                <a href="{{ path('delete_trick', {slugTrick: trick.slugTrick})}}" id="delete-trick" data-token="{{ csrf_token('delete' ~ trick.idTrick )}}" class="btn btn-danger">Delete</a>
             {% endif %}
                 <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
         </div>
@@ -50,6 +50,8 @@
 
 <script>
     addMediaListener();
+
+    deleteTrickButton();
 
     addNewTypeListener();
 </script>
