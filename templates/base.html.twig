@@ -54,7 +54,7 @@
 		</header>
 
         {% for message in app.flashes("positive-response") %}
-			<div class="container-fluid container-md">
+			<div class="container-fluid container-md mt-3">
 				<div class="row justify-content-center">
 					<div class="col-8 alert alert-success">
                 		{{ message }}
@@ -63,7 +63,7 @@
             </div>
         {% endfor %}
         {% for message in app.flashes("negative-response") %}
-			<div class="container-fluid container-md">
+			<div class="container-fluid container-md mt-3">
 				<div class="row justify-content-center">
 					<div class="col-8 alert alert-danger">
                 		{{ message }}

@@ -40,6 +40,7 @@ class Trick
      * @ORM\JoinColumn(
      *      name="id_trick_type",
      *      referencedColumnName="id_trick_type")
+     * @Assert\NotBlank(message = "Trick type must be set.")
      */
     protected $trickType;
 
@@ -197,7 +198,7 @@ class Trick
     /**
      * @return TrickType
      */
-    public function getTrickType(): ?TrickType
+    public function getTrickType(): TrickType
     {
         return $this->trickType;
     }

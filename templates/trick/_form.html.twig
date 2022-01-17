@@ -2,18 +2,18 @@
 {{ form_row(form._token) }}
     {% if app.request.attributes.get('_route') == "add_trick" %}
         <div class="row mb-4 px-5">
-            <div class="col-12 col-md-10 mx-auto">
+            <div class="col-12 col-md-10 mx-auto form-container">
                 {{ form_row(form.nameTrick) }}
             </div>
         </div>
     {% endif %}
     <div class="row mb-4 px-5">
-        <div class="col-12 col-md-10 mx-auto" id="trick-description">
+        <div class="col-12 col-md-10 mx-auto form-container" id="trick-description">
             {{ form_row(form.descriptionTrick) }}
         </div>
     </div>
     <div class="row mb-4 px-5">
-        <div class="col-12 col-md-10 mx-auto">
+        <div class="col-12 col-md-10 mx-auto form-container">
 
             {{ form_row(form.trickType) }}
 
@@ -34,6 +34,7 @@
             <ul class="medias" data-index="{{ form.medias|length > 0 ? form.medias|last.medias.name + 1 : 0 }}" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}"></ul>
 
             {{ form_help(form.medias) }}
+
             {% do form.medias.setRendered %}
         </div>
     </div>
@@ -50,8 +51,14 @@
 
 <script>
     addMediaListener();
-
-    deleteTrickButton();
-
-    addNewTypeListener();
 </script>
+
+{% if app.request.attributes.get('_route') == "update_trick" %}
+    <script>
+        deleteTrickButton();
+    </script>
+{% else %}
+    <script>
+        addNewTypeListener();
+    </script>
+{% endif %}
