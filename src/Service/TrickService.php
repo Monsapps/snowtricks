@@ -7,7 +7,6 @@ namespace App\Service;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
