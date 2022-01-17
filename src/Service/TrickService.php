@@ -10,12 +10,13 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickService
 {
     private $managerRegistry;
-    private $container;
+    private $tokenManager;
     private $router;
     private $trickRepo;
     private $typeService;
@@ -25,7 +26,7 @@ class TrickService
 
     public function __construct(
         ManagerRegistry $managerRegistry,
-        ContainerInterface $container,
+        CsrfTokenManagerInterface $tokenManager,
         TrickRepository $trickRepo,
         TrickTypeService $typeService,
         TrickImageService $imageService,
@@ -34,7 +35,7 @@ class TrickService
         CommentService $commentService)
     {
         $this->managerRegistry = $managerRegistry;
-        $this->container = $container;
+        $this->tokenManager = $tokenManager;
         $this->router = $router;
         $this->trickRepo = $trickRepo;
         $this->typeService = $typeService;
@@ -157,7 +158,6 @@ class TrickService
          * when we render some symfony values in Twig with JavaScript,
          * JS values not properly rendered
          */
-        $tokenProvider = $this->container->get('security.csrf.token_manager');
 
         $tricks = $this->trickRepo->getTricks($limit, $offset);
 
@@ -170,7 +170,7 @@ class TrickService
                 $image = $trick->getImages()[0]->getPathTrickImage();
             }
 
-            $token = $tokenProvider->getToken('delete' . $trick->getIdTrick())->getValue();
+            $token = $this->tokenManager->getToken('delete' . $trick->getIdTrick())->getValue();
 
             
             $trickUrl = $this->router->generate("tricks_details", [
