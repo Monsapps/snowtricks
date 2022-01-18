@@ -145,7 +145,10 @@ class TrickController extends AbstractController
 
             $trickService->deleteTrick($trick);
 
-            return new JsonResponse(['success' => 1]);
+            return new JsonResponse([
+                "success" => 1,
+                "tricksPage" => $this->generateUrl("tricks")
+            ]);
         }
 
         return new JsonResponse(['error' => 'Invalid token'], 400);

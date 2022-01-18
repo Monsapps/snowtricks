@@ -40,6 +40,7 @@ class Trick
      * @ORM\JoinColumn(
      *      name="id_trick_type",
      *      referencedColumnName="id_trick_type")
+     * @Assert\NotBlank(message = "Trick type must be set.")
      */
     protected $trickType;
 
@@ -75,7 +76,7 @@ class Trick
      *      nullable=true)
      * @Assert\Type("\DateTimeInterface")
      */
-    protected $modificationDateTrick;
+    protected $editDateTrick;
 
     /**
      * @ORM\Column(
@@ -197,7 +198,7 @@ class Trick
     /**
      * @return TrickType
      */
-    public function getTrickType(): ?TrickType
+    public function getTrickType(): TrickType
     {
         return $this->trickType;
     }
@@ -247,12 +248,12 @@ class Trick
 
     public function getModificationDateTrick(): ?DateTime
     {
-        return $this->modificationDateTrick;
+        return $this->editDateTrick;
     }
 
-    public function setModificationDateTrick(DateTime $modificationDateTrick): self
+    public function setModificationDateTrick(DateTime $editDateTrick): self
     {
-        $this->modificationDateTrick = $modificationDateTrick;
+        $this->editDateTrick = $editDateTrick;
 
         return $this;
     }
