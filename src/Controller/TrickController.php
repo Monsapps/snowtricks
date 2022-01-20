@@ -160,11 +160,11 @@ class TrickController extends AbstractController
      *      methods={"GET"})
      */
     public function getTrick(
-        int $limit,
-        int $page,
+        $limit,
+        $page,
         TrickService $trickService)
     {
-
+        
         if(!is_numeric($limit) || !is_numeric($page)) {
             return new JsonResponse(["error" => "Bad request"], 400);
         }
