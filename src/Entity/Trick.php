@@ -196,7 +196,7 @@ class Trick
     /**
      * @return TrickType
      */
-    public function getTrickType(): TrickType
+    public function getTrickType(): ?TrickType
     {
         return $this->trickType;
     }
