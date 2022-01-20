@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
-  <build time="Thu Jan 20 10:00:49 UTC 2022" phpunit="9.5.10" coverage="9.2.9">
+  <build time="Thu Jan 20 10:09:24 UTC 2022" phpunit="9.5.10" coverage="9.2.9">
     <runtime name="PHP" version="7.3.21" url="https://secure.php.net/"/>
     <driver name="xdebug" version="3.1.2"/>
   </build>
@@ -12,8 +12,8 @@
     </tests>
     <directory name="/">
       <totals>
-        <lines total="3195" comments="685" code="2510" executable="718" executed="78" percent="10.86"/>
-        <methods count="164" tested="22" percent="13.41"/>
+        <lines total="3195" comments="685" code="2510" executable="718" executed="80" percent="11.14"/>
+        <methods count="164" tested="24" percent="14.63"/>
         <functions count="0" tested="0" percent="0"/>
         <classes count="37" tested="2" percent="5.41"/>
         <traits count="0" tested="0" percent="0"/>
@@ -335,16 +335,16 @@
       </directory>
       <directory name="Subscriber">
         <totals>
-          <lines total="43" comments="3" code="40" executable="6" executed="0" percent="0.00"/>
-          <methods count="4" tested="0" percent="0.00"/>
+          <lines total="43" comments="3" code="40" executable="6" executed="2" percent="33.33"/>
+          <methods count="4" tested="2" percent="50.00"/>
           <functions count="0" tested="0" percent="0"/>
           <classes count="2" tested="0" percent="0.00"/>
           <traits count="0" tested="0" percent="0"/>
         </totals>
         <file name="ConfirmMailSubscriber.php" href="Subscriber/ConfirmMailSubscriber.php.xml">
           <totals>
-            <lines total="20" comments="0" code="20" executable="3" executed="0" percent="0.00"/>
-            <methods count="2" tested="0" percent="0.00"/>
+            <lines total="20" comments="0" code="20" executable="3" executed="1" percent="33.33"/>
+            <methods count="2" tested="1" percent="50.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="0" percent="0.00"/>
             <traits count="0" tested="0" percent="0"/>
@@ -352,8 +352,8 @@
         </file>
         <file name="ForgetMailSubscriber.php" href="Subscriber/ForgetMailSubscriber.php.xml">
           <totals>
-            <lines total="23" comments="3" code="20" executable="3" executed="0" percent="0.00"/>
-            <methods count="2" tested="0" percent="0.00"/>
+            <lines total="23" comments="3" code="20" executable="3" executed="1" percent="33.33"/>
+            <methods count="2" tested="1" percent="50.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="0" percent="0.00"/>
             <traits count="0" tested="0" percent="0"/>
