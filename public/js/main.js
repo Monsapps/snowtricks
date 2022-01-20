@@ -243,7 +243,6 @@ function updateModalMedia() {
         .then((response) => response.text())
         .then((html) => {
             modalContent.innerHTML = html;
-            
             updateModalMedia();
         })
         .catch((e) => console.log(e));
@@ -269,14 +268,15 @@ function updateMediaListener() {
             })
             .then((response) => response.text())
             .then((content) => {
-                let modalContent = document.querySelector("#modal-body");
+                    let modalContent = document.querySelector("#modal-body");
 
-                modalContent.innerHTML = content;
+                    modalContent.innerHTML = content;
 
-                updateModalMedia();
-                });
-            })
+                    updateModalMedia();
+
+                })
             .catch((e) => console.log(e));
+            });
         });
 }
 
@@ -302,7 +302,7 @@ function deleteMediaListener() {
                 .then((response) => response.json())
                 .then((data) => {
                     if(data.success) {
-                        this.parentElement.remove();
+                        this.parentElement.parentElement.parentElement.remove();
                     } else {
                         alert(data.error);
                     }
