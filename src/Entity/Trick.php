@@ -163,8 +163,6 @@ class Trick
         return $this;
     }
 
-    //public function setImages(Collection $images): self ??
-
     /**
      * @return Collection|TrickMedia[]
      */
