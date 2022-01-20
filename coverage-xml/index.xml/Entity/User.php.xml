@@ -1,0 +1,1323 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="User.php" path="\Entity">
+    <totals>
+      <lines total="250" comments="97" code="153" executable="30" executed="6" percent="20.00"/>
+      <methods count="20" tested="4" percent="20.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="0" percent="0.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Entity\User" start="27" executable="30" executed="6" crap="224.8">
+      <namespace name="App\Entity"/>
+      <method name="getName" signature="getName(): ?string" start="110" end="113" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setName" signature="setName(string $name): self" start="115" end="120" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getAvatar" signature="getAvatar(): ?App\Entity\Avatar" start="122" end="125" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setAvatar" signature="setAvatar(App\Entity\Avatar $avatar): self" start="127" end="132" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getEmail" signature="getEmail(): ?string" start="134" end="137" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setEmail" signature="setEmail(string $email): self" start="139" end="144" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getRegistrationDate" signature="getRegistrationDate(): ?DateTime" start="146" end="149" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setRegistrationDate" signature="setRegistrationDate(DateTime $date): self" start="151" end="156" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getRegistrationToken" signature="getRegistrationToken(): ?string" start="158" end="161" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setRegistrationToken" signature="setRegistrationToken(?string $token): self" start="163" end="168" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getPasswordToken" signature="getPasswordToken(): ?string" start="170" end="173" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setPasswordToken" signature="setPasswordToken(?string $token): self" start="175" end="179" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getUserIdentifier" signature="getUserIdentifier(): string" start="186" end="189" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="getUsername" signature="getUsername(): string" start="191" end="194" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="getRoles" signature="getRoles(): array" start="199" end="206" crap="1" executable="3" executed="3" coverage="100"/>
+      <method name="setRoles" signature="setRoles(array $roles): self" start="208" end="213" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getPassword" signature="getPassword(): string" start="218" end="221" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="setPassword" signature="setPassword(string $password): self" start="223" end="228" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getSalt" signature="getSalt(): ?string" start="236" end="239" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="eraseCredentials" signature="eraseCredentials()" start="244" end="248" crap="2" executable="1" executed="0" coverage="0"/>
+    </class>
+    <coverage>
+      <line nr="188">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+      <line nr="201">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+      <line nr="203">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+      <line nr="205">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+      <line nr="220">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+      <line nr="238">
+        <covered by="AuthenticationTest::testLoginUser"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2">
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="3">
+        <token name="T_DOC_COMMENT"> * User entity</token>
+      </line>
+      <line no="4">
+        <token name="T_DOC_COMMENT"> */</token>
+      </line>
+      <line no="5">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">App</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Entity</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6"/>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">DateTime</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">ORM</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Mapping</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_AS">as</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ORM</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Component</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Validator</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Constraints</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_AS">as</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Assert</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Bridge</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Validator</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Constraints</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">UniqueEntity</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="11">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Component</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Security</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Core</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">User</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">PasswordAuthenticatedUserInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="12">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Component</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Security</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Core</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">User</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">UserInterface</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="13"/>
+      <line no="14">
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="15">
+        <token name="T_DOC_COMMENT"> * User entity store in database via Doctrine</token>
+      </line>
+      <line no="16">
+        <token name="T_DOC_COMMENT"> * @ORM\Entity(repositoryClass="App\Repository\UserRepository")</token>
+      </line>
+      <line no="17">
+        <token name="T_DOC_COMMENT"> * @ORM\Table(name="users")</token>
+      </line>
+      <line no="18">
+        <token name="T_DOC_COMMENT"> * @UniqueEntity(</token>
+      </line>
+      <line no="19">
+        <token name="T_DOC_COMMENT"> *      fields={"email"},</token>
+      </line>
+      <line no="20">
+        <token name="T_DOC_COMMENT"> *      errorPath="email",</token>
+      </line>
+      <line no="21">
+        <token name="T_DOC_COMMENT"> *      message="Email already exist, forgot password ?")</token>
+      </line>
+      <line no="22">
+        <token name="T_DOC_COMMENT"> * @UniqueEntity(</token>
+      </line>
+      <line no="23">
+        <token name="T_DOC_COMMENT"> *      fields={"name"},</token>
+      </line>
+      <line no="24">
+        <token name="T_DOC_COMMENT"> *      errorPath="name",</token>
+      </line>
+      <line no="25">
+        <token name="T_DOC_COMMENT"> *      message="Username already exist")</token>
+      </line>
+      <line no="26">
+        <token name="T_DOC_COMMENT"> */</token>
+      </line>
+      <line no="27">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">User</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_IMPLEMENTS">implements</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">UserInterface</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">PasswordAuthenticatedUserInterface</token>
+      </line>
+      <line no="28">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="29">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="30">
+        <token name="T_DOC_COMMENT">     * @ORM\Id()</token>
+      </line>
+      <line no="31">
+        <token name="T_DOC_COMMENT">     * @ORM\GeneratedValue(strategy="AUTO")</token>
+      </line>
+      <line no="32">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="33">
+        <token name="T_DOC_COMMENT">     *      type="integer",</token>
+      </line>
+      <line no="34">
+        <token name="T_DOC_COMMENT">     *      name="id_user")</token>
+      </line>
+      <line no="35">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="36">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$idUser</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="37"/>
+      <line no="38">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="39">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="40">
+        <token name="T_DOC_COMMENT">     *      type="string",</token>
+      </line>
+      <line no="41">
+        <token name="T_DOC_COMMENT">     *      name="name_user",</token>
+      </line>
+      <line no="42">
+        <token name="T_DOC_COMMENT">     *      unique=true)</token>
+      </line>
+      <line no="43">
+        <token name="T_DOC_COMMENT">     * @Assert\NotBlank(message = "Username must be set.")</token>
+      </line>
+      <line no="44">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="45">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$name</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="46"/>
+      <line no="47">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="48">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(type="string", name="password_user")</token>
+      </line>
+      <line no="49">
+        <token name="T_DOC_COMMENT">     * @Assert\NotBlank(message = "Password must be set.")</token>
+      </line>
+      <line no="50">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="51">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$password</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="52"/>
+      <line no="53">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="54">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="55">
+        <token name="T_DOC_COMMENT">     *      type="string",</token>
+      </line>
+      <line no="56">
+        <token name="T_DOC_COMMENT">     *      name="email_user",</token>
+      </line>
+      <line no="57">
+        <token name="T_DOC_COMMENT">     *      unique=true)</token>
+      </line>
+      <line no="58">
+        <token name="T_DOC_COMMENT">     * @Assert\NotBlank(message = "Email must be set.")</token>
+      </line>
+      <line no="59">
+        <token name="T_DOC_COMMENT">     * @Assert\Email(message = "You must enter a valid email address.")</token>
+      </line>
+      <line no="60">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="61">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$email</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="62"/>
+      <line no="63">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="64">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(type="json")</token>
+      </line>
+      <line no="65">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="66">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PRIVATE">private</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_SQUARE">[</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="67"/>
+      <line no="68">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="69">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="70">
+        <token name="T_DOC_COMMENT">     *      type="datetime",</token>
+      </line>
+      <line no="71">
+        <token name="T_DOC_COMMENT">     *      name="registration_date_user")</token>
+      </line>
+      <line no="72">
+        <token name="T_DOC_COMMENT">     * @Assert\DateTime</token>
+      </line>
+      <line no="73">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="74">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$registrationDate</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="75"/>
+      <line no="76">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="77">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="78">
+        <token name="T_DOC_COMMENT">     *      type="string",</token>
+      </line>
+      <line no="79">
+        <token name="T_DOC_COMMENT">     *      name="registration_token_user",</token>
+      </line>
+      <line no="80">
+        <token name="T_DOC_COMMENT">     *      nullable=true)</token>
+      </line>
+      <line no="81">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="82">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$registrationToken</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="83"/>
+      <line no="84">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="85">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="86">
+        <token name="T_DOC_COMMENT">     *      type="string",</token>
+      </line>
+      <line no="87">
+        <token name="T_DOC_COMMENT">     *      name="password_token_user",</token>
+      </line>
+      <line no="88">
+        <token name="T_DOC_COMMENT">     *      nullable=true)</token>
+      </line>
+      <line no="89">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="90">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$passwordToken</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="91"/>
+      <line no="92">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="93">
+        <token name="T_DOC_COMMENT">     * @ORM\OneToMany(</token>
+      </line>
+      <line no="94">
+        <token name="T_DOC_COMMENT">     *      targetEntity="App\Entity\Comment",</token>
+      </line>
+      <line no="95">
+        <token name="T_DOC_COMMENT">     *      mappedBy="user")</token>
+      </line>
+      <line no="96">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="97">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$comments</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="98"/>
+      <line no="99">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="100">
+        <token name="T_DOC_COMMENT">     * @ORM\OneToOne(</token>
+      </line>
+      <line no="101">
+        <token name="T_DOC_COMMENT">     *      targetEntity="App\Entity\Avatar",</token>
+      </line>
+      <line no="102">
+        <token name="T_DOC_COMMENT">     *      mappedBy="user")</token>
+      </line>
+      <line no="103">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="104">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$avatar</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="105"/>
+      <line no="106">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="107">
+        <token name="T_DOC_COMMENT">     * Get name of user</token>
+      </line>
+      <line no="108">
+        <token name="T_DOC_COMMENT">     * @return string</token>
+      </line>
+      <line no="109">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="110">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getName</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="111">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="112">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">name</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="113">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="114"/>
+      <line no="115">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setName</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$name</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="116">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="117">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">name</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$name</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="118"/>
+      <line no="119">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="120">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="121"/>
+      <line no="122">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getAvatar</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">Avatar</token>
+      </line>
+      <line no="123">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="124">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">avatar</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="125">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="126"/>
+      <line no="127">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setAvatar</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">Avatar</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$avatar</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="128">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="129">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">avatar</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$avatar</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="130"/>
+      <line no="131">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="132">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="133"/>
+      <line no="134">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getEmail</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="135">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="136">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">email</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="137">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="138"/>
+      <line no="139">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setEmail</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$email</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="140">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="141">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">email</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$email</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="142"/>
+      <line no="143">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="144">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="145"/>
+      <line no="146">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getRegistrationDate</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">DateTime</token>
+      </line>
+      <line no="147">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="148">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">registrationDate</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="149">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="150"/>
+      <line no="151">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setRegistrationDate</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">DateTime</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$date</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="152">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="153">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">registrationDate</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$date</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="154"/>
+      <line no="155">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="156">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="157"/>
+      <line no="158">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getRegistrationToken</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="159">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="160">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">registrationToken</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="161">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="162"/>
+      <line no="163">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setRegistrationToken</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$token</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="164">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="165">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">registrationToken</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$token</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="166"/>
+      <line no="167">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="168">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="169"/>
+      <line no="170">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getPasswordToken</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="171">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="172">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">passwordToken</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="173">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="174"/>
+      <line no="175">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setPasswordToken</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$token</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="176">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="177">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">passwordToken</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$token</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="178">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="179">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="180"/>
+      <line no="181">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="182">
+        <token name="T_DOC_COMMENT">     * The public representation of the user (e.g. a username, an email address, etc.)</token>
+      </line>
+      <line no="183">
+        <token name="T_DOC_COMMENT">     *</token>
+      </line>
+      <line no="184">
+        <token name="T_DOC_COMMENT">     * @see UserInterface</token>
+      </line>
+      <line no="185">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="186">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getUserIdentifier</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="187">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="188">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING_CAST">(string)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">name</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="189">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="190"/>
+      <line no="191">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getUsername</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="192">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="193">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING_CAST">(string)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">name</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="194">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="195"/>
+      <line no="196">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="197">
+        <token name="T_DOC_COMMENT">     * @see UserInterface</token>
+      </line>
+      <line no="198">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="199">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getRoles</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_ARRAY">array</token>
+      </line>
+      <line no="200">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="201">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">roles</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="202">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// guarantee every user at least has ROLE_USER</token>
+      </line>
+      <line no="203">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_OPEN_SQUARE">[</token>
+        <token name="T_CLOSE_SQUARE">]</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'ROLE_USER'</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="204"/>
+      <line no="205">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">array_unique</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="206">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="207"/>
+      <line no="208">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setRoles</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_ARRAY">array</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="209">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="210">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">roles</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$roles</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="211"/>
+      <line no="212">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="213">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="214"/>
+      <line no="215">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="216">
+        <token name="T_DOC_COMMENT">     * @see PasswordAuthenticatedUserInterface</token>
+      </line>
+      <line no="217">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="218">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getPassword</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="219">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="220">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">password</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="221">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="222"/>
+      <line no="223">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setPassword</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$password</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="224">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="225">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">password</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$password</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="226"/>
+      <line no="227">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="228">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="229"/>
+      <line no="230">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="231">
+        <token name="T_DOC_COMMENT">     * Returning a salt is only needed, if you are not using a modern</token>
+      </line>
+      <line no="232">
+        <token name="T_DOC_COMMENT">     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.</token>
+      </line>
+      <line no="233">
+        <token name="T_DOC_COMMENT">     *</token>
+      </line>
+      <line no="234">
+        <token name="T_DOC_COMMENT">     * @see UserInterface</token>
+      </line>
+      <line no="235">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="236">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getSalt</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="237">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="238">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">null</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="239">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="240"/>
+      <line no="241">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="242">
+        <token name="T_DOC_COMMENT">     * @see UserInterface</token>
+      </line>
+      <line no="243">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="244">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">eraseCredentials</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="245">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="246">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// If you store any temporary, sensitive data on the user, clear it here</token>
+      </line>
+      <line no="247">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// $this-&gt;plainPassword = null;</token>
+      </line>
+      <line no="248">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="249"/>
+      <line no="250">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="251"/>
+    </source>
+  </file>
+</phpunit>

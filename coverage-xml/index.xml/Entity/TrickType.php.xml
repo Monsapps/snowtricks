@@ -1,0 +1,465 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="TrickType.php" path="\Entity">
+    <totals>
+      <lines total="88" comments="39" code="49" executable="8" executed="0" percent="0.00"/>
+      <methods count="6" tested="0" percent="0.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="0" percent="0.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Entity\TrickType" start="22" executable="8" executed="0" crap="42">
+      <namespace name="App\Entity"/>
+      <method name="__construct" signature="__construct()" start="49" end="52" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="__toString" signature="__toString()" start="54" end="57" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="getId" signature="getId(): int" start="59" end="62" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="getName" signature="getName(): ?string" start="68" end="71" crap="2" executable="1" executed="0" coverage="0"/>
+      <method name="setName" signature="setName(string $nameTrickType): self" start="73" end="78" crap="2" executable="2" executed="0" coverage="0"/>
+      <method name="getTricks" signature="getTricks(): Doctrine\Common\Collections\Collection" start="84" end="87" crap="2" executable="1" executed="0" coverage="0"/>
+    </class>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2">
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="3">
+        <token name="T_DOC_COMMENT"> * Trick type entity</token>
+      </line>
+      <line no="4">
+        <token name="T_DOC_COMMENT"> */</token>
+      </line>
+      <line no="5">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">App</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Entity</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6"/>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Common</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Collections</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">ArrayCollection</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Common</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Collections</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Collection</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">ORM</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Mapping</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_AS">as</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ORM</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Component</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Validator</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Constraints</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_AS">as</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Assert</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="11">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Symfony</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Bridge</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Validator</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Constraints</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">UniqueEntity</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="12"/>
+      <line no="13">
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="14">
+        <token name="T_DOC_COMMENT"> * Trick type entity store in doctrine </token>
+      </line>
+      <line no="15">
+        <token name="T_DOC_COMMENT"> * @ORM\Entity()</token>
+      </line>
+      <line no="16">
+        <token name="T_DOC_COMMENT"> * @ORM\Table(name="tricks_type")</token>
+      </line>
+      <line no="17">
+        <token name="T_DOC_COMMENT"> * @UniqueEntity(</token>
+      </line>
+      <line no="18">
+        <token name="T_DOC_COMMENT"> *      fields={"name_trick_type"},</token>
+      </line>
+      <line no="19">
+        <token name="T_DOC_COMMENT"> *      errorPath="name_trick_type",</token>
+      </line>
+      <line no="20">
+        <token name="T_DOC_COMMENT"> *      message="Trick type name exist, update it")</token>
+      </line>
+      <line no="21">
+        <token name="T_DOC_COMMENT"> */</token>
+      </line>
+      <line no="22">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">TrickType</token>
+      </line>
+      <line no="23">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="24">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="25">
+        <token name="T_DOC_COMMENT">     * @ORM\Id()</token>
+      </line>
+      <line no="26">
+        <token name="T_DOC_COMMENT">     * @ORM\GeneratedValue(strategy="AUTO")</token>
+      </line>
+      <line no="27">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="28">
+        <token name="T_DOC_COMMENT">     *      type="integer",</token>
+      </line>
+      <line no="29">
+        <token name="T_DOC_COMMENT">     *      name="id_trick_type")</token>
+      </line>
+      <line no="30">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="31">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$idTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="32"/>
+      <line no="33">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="34">
+        <token name="T_DOC_COMMENT">     * @ORM\Column(</token>
+      </line>
+      <line no="35">
+        <token name="T_DOC_COMMENT">     *      type="string",</token>
+      </line>
+      <line no="36">
+        <token name="T_DOC_COMMENT">     *      name="name_trick_type",</token>
+      </line>
+      <line no="37">
+        <token name="T_DOC_COMMENT">     *      unique=true)</token>
+      </line>
+      <line no="38">
+        <token name="T_DOC_COMMENT">     * @Assert\NotBlank(message = "Trick type name must be set.")</token>
+      </line>
+      <line no="39">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="40">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$nameTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="41"/>
+      <line no="42">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="43">
+        <token name="T_DOC_COMMENT">     * @ORM\OneToMany(</token>
+      </line>
+      <line no="44">
+        <token name="T_DOC_COMMENT">     *      targetEntity="App\Entity\Trick",</token>
+      </line>
+      <line no="45">
+        <token name="T_DOC_COMMENT">     *      mappedBy="trickType")</token>
+      </line>
+      <line no="46">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="47">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PRIVATE">private</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$tricks</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="48"/>
+      <line no="49">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">__construct</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="50">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="51">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">tricks</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ArrayCollection</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="52">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="53"/>
+      <line no="54">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">__toString</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="55">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="56">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">nameTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="57">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="58"/>
+      <line no="59">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getId</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">int</token>
+      </line>
+      <line no="60">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="61">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">idTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="62">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="63">
+        <token name="T_WHITESPACE">    </token>
+      </line>
+      <line no="64">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="65">
+        <token name="T_DOC_COMMENT">     * Get trick type name</token>
+      </line>
+      <line no="66">
+        <token name="T_DOC_COMMENT">     * @return string</token>
+      </line>
+      <line no="67">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="68">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getName</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_QUESTION_MARK">?</token>
+        <token name="T_STRING">string</token>
+      </line>
+      <line no="69">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="70">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">nameTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="71">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="72"/>
+      <line no="73">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">setName</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$nameTrickType</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">self</token>
+      </line>
+      <line no="74">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="75">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">nameTrickType</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$nameTrickType</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="76"/>
+      <line no="77">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="78">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="79"/>
+      <line no="80">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="81">
+        <token name="T_DOC_COMMENT">     * Get all tricks by trick type</token>
+      </line>
+      <line no="82">
+        <token name="T_DOC_COMMENT">     * @return Collection|Trick[]</token>
+      </line>
+      <line no="83">
+        <token name="T_DOC_COMMENT">     */</token>
+      </line>
+      <line no="84">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getTricks</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Collection</token>
+      </line>
+      <line no="85">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="86">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">tricks</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="87">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="88">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="89"/>
+    </source>
+  </file>
+</phpunit>

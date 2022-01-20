@@ -1,0 +1,438 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="CommentRepository.php" path="\Repository">
+    <totals>
+      <lines total="67" comments="17" code="50" executable="17" executed="2" percent="11.76"/>
+      <methods count="3" tested="1" percent="33.33"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="0" percent="0.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Repository\CommentRepository" start="12" executable="17" executed="2" crap="9.18">
+      <namespace name="App\Repository"/>
+      <method name="__construct" signature="__construct(Doctrine\Persistence\ManagerRegistry $managerRegistry)" start="14" end="17" crap="1" executable="2" executed="2" coverage="100"/>
+      <method name="getComments" signature="getComments(App\Entity\Trick $trick, int $limit, int $offset)" start="19" end="51" crap="2" executable="11" executed="0" coverage="0"/>
+      <method name="countComments" signature="countComments(App\Entity\Trick $trick)" start="53" end="65" crap="2" executable="4" executed="0" coverage="0"/>
+    </class>
+    <coverage>
+      <line nr="16">
+        <covered by="TrickTest::testGetTrick"/>
+        <covered by="TrickTest::testGetTrickKo"/>
+      </line>
+      <line nr="17">
+        <covered by="TrickTest::testGetTrick"/>
+        <covered by="TrickTest::testGetTrickKo"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2">
+        <token name="T_DOC_COMMENT">/**</token>
+      </line>
+      <line no="3">
+        <token name="T_DOC_COMMENT"> * Comment repository</token>
+      </line>
+      <line no="4">
+        <token name="T_DOC_COMMENT"> */</token>
+      </line>
+      <line no="5">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">App</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Repository</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6"/>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">App</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Entity</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Comment</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">App</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Entity</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Trick</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Bundle</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">DoctrineBundle</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Repository</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">ServiceEntityRepository</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="10">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Doctrine</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">Persistence</token>
+        <token name="T_NS_SEPARATOR">\</token>
+        <token name="T_STRING">ManagerRegistry</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="11"/>
+      <line no="12">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">CommentRepository</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EXTENDS">extends</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ServiceEntityRepository</token>
+      </line>
+      <line no="13">
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="14">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">__construct</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">ManagerRegistry</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$managerRegistry</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="15">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="16">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">parent</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_STRING">__construct</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$managerRegistry</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Comment</token>
+        <token name="T_DOUBLE_COLON">::</token>
+        <token name="T_CLASS">class</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="17">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="18"/>
+      <line no="19">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">getComments</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="20">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">Trick</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$trick</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="21">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">int</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$limit</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="22">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">int</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$offset</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="23">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="24">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getEntityManager</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="25"/>
+      <line no="26">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">/*$query = $entityManager-&gt;createQuery("</token>
+      </line>
+      <line no="27">
+        <token name="T_COMMENT">            SELECT c, u.name, a.pathAvatar</token>
+      </line>
+      <line no="28">
+        <token name="T_COMMENT">            FROM App\Entity\Comment c</token>
+      </line>
+      <line no="29">
+        <token name="T_COMMENT">            INNER JOIN App\Entity\User u </token>
+      </line>
+      <line no="30">
+        <token name="T_COMMENT">            INNER JOIN App\Entity\Avatar a</token>
+      </line>
+      <line no="31">
+        <token name="T_COMMENT">            WHERE c.trick = :trick</token>
+      </line>
+      <line no="32">
+        <token name="T_COMMENT">            ORDER BY c.dateComment DESC</token>
+      </line>
+      <line no="33">
+        <token name="T_COMMENT">        ")</token>
+      </line>
+      <line no="34">
+        <token name="T_COMMENT">        -&gt;setMaxResults($limit)</token>
+      </line>
+      <line no="35">
+        <token name="T_COMMENT">        -&gt;setFirstResult($offset)</token>
+      </line>
+      <line no="36">
+        <token name="T_COMMENT">        -&gt;setParameter("trick", $trick);</token>
+      </line>
+      <line no="37">
+        <token name="T_COMMENT">        </token>
+      </line>
+      <line no="38">
+        <token name="T_COMMENT">        return $query-&gt;getResult();*/</token>
+      </line>
+      <line no="39"/>
+      <line no="40">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$query</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">createQueryBuilder</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="41">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">select</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"c"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="42">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">from</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"App\Entity\Comment"</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"c"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="43">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">join</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"App\Entity\User"</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"u"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="44">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">where</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"c.trick = :trick"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="45">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">orderBy</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"c.dateComment"</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"DESC"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="46">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setMaxResults</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$limit</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="47">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setFirstResult</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$offset</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="48">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setParameter</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"trick"</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$trick</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="49"/>
+      <line no="50">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$query</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getQuery</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getResult</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="51">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="52"/>
+      <line no="53">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">countComments</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">Trick</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$trick</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="54">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="55">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getEntityManager</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="56">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_COMMENT">// return comment count</token>
+      </line>
+      <line no="57">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$query</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$entityManager</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">createQuery</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"</token>
+      </line>
+      <line no="58">
+        <token name="T_CONSTANT_ENCAPSED_STRING">        SELECT count(c)</token>
+      </line>
+      <line no="59">
+        <token name="T_CONSTANT_ENCAPSED_STRING">        FROM App\Entity\Comment c</token>
+      </line>
+      <line no="60">
+        <token name="T_CONSTANT_ENCAPSED_STRING">        WHERE c.trick = :trick</token>
+      </line>
+      <line no="61">
+        <token name="T_CONSTANT_ENCAPSED_STRING">        "</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+      </line>
+      <line no="62">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">setParameter</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"trick"</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$trick</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="63">
+        <token name="T_WHITESPACE">        </token>
+      </line>
+      <line no="64">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_RETURN">return</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$query</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">getSingleScalarResult</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="65">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="66"/>
+      <line no="67">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="68"/>
+    </source>
+  </file>
+</phpunit>
